@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership - 한국TOC협회</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        /* 데스크톱 환경 메뉴 호버 및 포커스 드롭다운 구현 */
+        .group:hover .dropdown-menu,
+        .group:focus-within .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen overflow-x-clip">
+
+    <!-- 1. GNB (PC + 모바일 반응형 최종 통합 헤더) -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- 로고 -->
+                <div class="flex-shrink-0">
+                    <a href="index.html"
+                        class="text-xl md:text-2xl font-extrabold text-blue-700 tracking-tight">한국TOC협회</a>
+                </div>
+
+                <!-- 데스크톱 메뉴 (PC) -->
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <!-- WHAT IS TOC? -->
+                    <div class="relative group py-6">
+                        <button
+                            class="text-gray-700 hover:text-blue-600 font-semibold uppercase tracking-wider text-sm flex items-center gap-1">
+                            What is TOC?
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+                        <div
+                            class="dropdown-menu hidden absolute left-0 top-full mt-0 w-52 bg-white border border-gray-100 rounded-b-lg shadow-xl py-2">
+                            <a href="what-toc.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">TOC란?</a>
+                            <a href="5fs.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">5
+                                Focusing Steps</a>
+                            <a href="dbr.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Drum-Buffer-Rope
+                                (DBR)</a>
+                            <a href="ccpm.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">CCPM</a>
+                            <a href="ta.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Throughput
+                                Accounting</a>
+                            <a href="tp.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Thinking
+                                Process</a>
+                            <a href="mta.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">MTA</a>
+                        </div>
+                    </div>
+
+                    <a href="education.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Education</a>
+                    <a href="certification.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Certification</a>
+                    <a href="membership.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Membership</a>
+                    <a href="news.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">News</a>
+
+                    <!-- ABOUT US -->
+                    <div class="relative group py-6">
+                        <button
+                            class="text-gray-700 hover:text-blue-600 font-semibold uppercase tracking-wider text-sm flex items-center gap-1">
+                            About Us
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+                        <div
+                            class="dropdown-menu hidden absolute right-0 top-full mt-0 w-48 bg-white border border-gray-100 rounded-b-lg shadow-xl py-2">
+                            <a href="about.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">협회 소개
+                                및
+                                인사말</a>
+                            <a href="history.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">협회
+                                연혁</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- 모바일 햄버거 버튼 (스마트폰 전용) -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu()"
+                        class="text-gray-700 hover:text-blue-600 focus:outline-none p-2 rounded-lg"
+                        aria-label="메뉴 열기" aria-expanded="false">
+                        <svg id="icon-menu-open" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="icon-menu-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 모바일 펼침 메뉴 (버튼 클릭 시 열림) -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div class="px-4 pt-2 pb-5 space-y-1">
+                <!-- WHAT IS TOC? 아코디언 -->
+                <div>
+                    <button type="button" onclick="toggleMobileSubmenu('mobile-submenu-toc', 'icon-toc')"
+                        class="w-full flex justify-between items-center px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">
+                        <span>WHAT IS TOC?</span>
+                        <svg id="icon-toc" class="w-5 h-5 transition-transform duration-200" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="mobile-submenu-toc" class="hidden pl-4 pr-2 py-1 space-y-1 bg-gray-50 rounded-lg mt-1">
+                        <a href="what-toc.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· TOC란?</a>
+                        <a href="5fs.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· 5
+                            Focusing Steps</a>
+                        <a href="dbr.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Drum-Buffer-Rope (DBR)</a>
+                        <a href="ccpm.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            CCPM</a>
+                        <a href="ta.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Throughput Accounting</a>
+                        <a href="tp.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Thinking Process</a>
+                        <a href="mta.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            MTA</a>
+                    </div>
+                </div>
+
+                <a href="education.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">EDUCATION</a>
+                <a href="certification.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">CERTIFICATION</a>
+                <a href="membership.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">MEMBERSHIP</a>
+                <a href="news.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">NEWS</a>
+
+                <!-- ABOUT US 아코디언 -->
+                <div>
+                    <button type="button" onclick="toggleMobileSubmenu('mobile-submenu-about', 'icon-about')"
+                        class="w-full flex justify-between items-center px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">
+                        <span>ABOUT US</span>
+                        <svg id="icon-about" class="w-5 h-5 transition-transform duration-200" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="mobile-submenu-about" class="hidden pl-4 pr-2 py-1 space-y-1 bg-gray-50 rounded-lg mt-1">
+                        <a href="about.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            협회 소개 및 인사말</a>
+                        <a href="history.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· 협회 연혁</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        function toggleMobileMenu(forceClose) {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            const openIcon = document.getElementById('icon-menu-open');
+            const closeIcon = document.getElementById('icon-menu-close');
+            if (!menu) return;
+
+            const isHidden = forceClose === true ? true : menu.classList.toggle('hidden');
+            if (forceClose === true) menu.classList.add('hidden');
+            if (btn) {
+                btn.setAttribute('aria-expanded', String(!isHidden));
+                btn.setAttribute('aria-label', isHidden ? '메뉴 열기' : '메뉴 닫기');
+            }
+            if (openIcon) openIcon.classList.toggle('hidden', !isHidden);
+            if (closeIcon) closeIcon.classList.toggle('hidden', isHidden);
+        }
+
+        function toggleMobileSubmenu(menuId, iconId) {
+            const targetMenu = document.getElementById(menuId || 'mobile-submenu');
+            const targetIcon = document.getElementById(iconId || 'mobile-submenu-icon');
+            if (targetMenu) targetMenu.classList.toggle('hidden');
+            if (targetIcon) targetIcon.classList.toggle('rotate-180');
+        }
+
+        (function initHeaderNavigation() {
+            const currentPage = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+            const header = document.querySelector('header');
+            if (!header) return;
+
+            header.querySelectorAll('a[href]').forEach((link) => {
+                const href = (link.getAttribute('href') || '').toLowerCase();
+                if (href && href === currentPage && !link.closest('.flex-shrink-0')) {
+                    link.classList.remove('text-gray-700', 'text-gray-800');
+                    link.classList.add('text-blue-600', 'font-bold');
+                    link.setAttribute('aria-current', 'page');
+
+                    const mobileSub = link.closest('[id^="mobile-submenu-"]');
+                    if (mobileSub) {
+                        mobileSub.classList.remove('hidden');
+                        const subBtn = mobileSub.previousElementSibling;
+                        const subIcon = subBtn ? subBtn.querySelector('svg') : null;
+                        if (subBtn) {
+                            subBtn.classList.remove('text-gray-800');
+                            subBtn.classList.add('text-blue-600');
+                        }
+                        if (subIcon) subIcon.classList.add('rotate-180');
+                    }
+
+                    const pcDropdown = link.closest('.dropdown-menu');
+                    if (pcDropdown && pcDropdown.previousElementSibling) {
+                        pcDropdown.previousElementSibling.classList.remove('text-gray-700');
+                        pcDropdown.previousElementSibling.classList.add('text-blue-600');
+                    }
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768) toggleMobileMenu(true);
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') toggleMobileMenu(true);
+            });
+        })();
+    </script>
+
+    <!-- 2. 타이틀 배너 -->
+    <div class="bg-blue-600 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Membership</h1>
+            <p class="mt-3 text-blue-100 text-base md:text-lg max-w-3xl mx-auto">
+                한국TOC협회 회원 구분 및 혜택, 회비 안내입니다.
+            </p>
+        </div>
+    </div>
+
+    <!-- 3. 메인 콘텐츠 -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full space-y-14">
+
+        <!-- 섹션 1: 회원 구분 및 혜택 통합 테이블 -->
+        <section>
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 border-l-4 border-blue-600 pl-3">회원 구분 및 혜택</h2>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 text-base break-keep">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th
+                                    class="px-6 py-4 text-left font-bold text-gray-800 w-[14%] min-w-[110px] whitespace-nowrap">
+                                    회원구분</th>
+                                <th
+                                    class="px-6 py-4 text-left font-bold text-gray-800 w-[38%] min-w-[260px] whitespace-nowrap">
+                                    자격 및 구분</th>
+                                <th
+                                    class="px-6 py-4 text-left font-bold text-gray-800 w-[48%] min-w-[300px] whitespace-nowrap">
+                                    회원 혜택</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tiers-tbody" class="divide-y divide-gray-200 bg-white"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 섹션 2: 회비 안내 테이블 -->
+        <section>
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 border-l-4 border-blue-600 pl-3">회비 안내</h2>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 text-base break-keep">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th colspan="2" class="px-6 py-4 text-left font-bold text-gray-800 whitespace-nowrap">
+                                    회원구분</th>
+                                <th class="px-6 py-4 text-right font-bold text-gray-800 whitespace-nowrap">입회비</th>
+                                <th class="px-6 py-4 text-right font-bold text-gray-800 whitespace-nowrap">연회비</th>
+                                <th class="px-6 py-4 text-center font-bold text-gray-800 whitespace-nowrap">자격유지</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fees-tbody" class="divide-y divide-gray-200 bg-white"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 섹션 3: 회원가입신청 바로가기 버튼 -->
+        <section class="bg-blue-600 rounded-2xl p-8 text-center text-white shadow-md">
+            <h3 class="text-xl sm:text-2xl font-bold mb-2">한국TOC협회와 함께 새로운 가치를 만들어 가세요</h3>
+            <p class="text-blue-100 text-sm sm:text-base mb-6">온라인 신청서를 작성하시면 입회 및 회비 납부 절차를 안내해 드립니다.</p>
+            <a id="membership-apply-btn" href="#" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 bg-white text-blue-700 font-extrabold px-8 py-4 rounded-full hover:bg-blue-50 transition shadow-sm text-base">
+                <span id="membership-apply-text">회원가입신청 및 회비 결제 ▶ 바로가기</span>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- 4. Footer (공통 표준 규격 푸터) -->
+    <footer class="bg-gray-900 text-gray-400 py-6 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div class="space-y-1 text-sm flex-grow">
+                <p class="text-white font-bold mb-3">사단법인 한국티오시협회</p>
+                <p>주소: 서울 서초구 강남대로 309 (코리아비지니스센타) 1814호</p>
+                <p>전화: 02-312-8504</p>
+                <p>대표메일: tockorea@tockorea.org <span class="hidden sm:inline mx-2">|</span><br class="sm:hidden"> 아카데미: academy@tockorea.org</p>
+            </div>
+            <div class="text-sm text-gray-500 whitespace-nowrap">
+                &copy; 2026 TOC Korea. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- 5. 구글 시트 실시간 연동 스크립트 -->
+    <script>
+
+        // ★ 1단계에서 배포한 Membership 시트 웹 앱 URL을 아래 작은따옴표 안에 붙여넣으세요 ★
+        const MEMBERSHIP_API_URL = 'https://script.google.com/macros/s/AKfycbyl3dzLupOgzh1HaLhLwG6xW9hAoJgO2SDp1r7r9ZzTR_5exMXsdvDscIIaWM44aU3M/exec';
+
+        // 기본 내장 데이터 (시트 로딩 전 즉시 화면 표시용)
+        const DEFAULT_DATA = {
+            tiers: [
+                {
+                    type: '정회원',
+                    qualification: '당해년도 정회원 회비를 납부하거나 종신회비를 납부한 사람으로서 본 협회의 사업목적에 부합하는 자',
+                    benefits: 'ㆍ 당 협회와 KTA에서 주관하는 세미나/워크샵/컨퍼런스의 참가비가 할인됩니다.\nㆍ 웹사이트에 게시된 자료 중 정회원 전용자료를 열람할 수 있습니다.\nㆍ 회원을 위한 특강에 무료로 참여할 수 있습니다.'
+                },
+                {
+                    type: '준회원',
+                    qualification: '정회원으로 활동하던 자로서 당해년도 회비를 아직 납부하지 않은 자, 혹은 회원 가입 후 정회원 회비를 납부하지 않은 온라인 회원',
+                    benefits: 'ㆍ 로그인 후에 자료실의 자료를 열람할 수 있습니다.\nㆍ 뉴스레터나 메일에 의해 최신 정보를 받아볼 수 있습니다.'
+                },
+                {
+                    type: '종신회원',
+                    qualification: '학식과 덕망이 높고 본 협회의 발전에 공로가 있는 국내외 인사',
+                    benefits: 'ㆍ 정회원 혜택과 동일'
+                },
+                {
+                    type: '명예회원',
+                    qualification: '본 협회의 활동과 발전을 위해 적극적으로 후원하는 법인 또는 단체',
+                    benefits: '-'
+                },
+                {
+                    type: '단체회원',
+                    qualification: '비영리단체 및 영리단체(Silver, Gold, Platinum)로 가입한 법인·단체',
+                    benefits: 'ㆍ 소속직원들에게 정회원 자격을 드립니다. (Silver 2명, Gold 5명, Platinum 10명)'
+                }
+            ],
+            fees: [
+                { group: '일반', type: '정회원', entryFee: '30,000원', annualFee: '50,000원', validity: '상세페이지 참조' },
+                { group: '일반', type: '준회원', entryFee: '-', annualFee: '-', validity: '상세페이지 참조' },
+                { group: '일반', type: '종신회원', entryFee: '500,000원', annualFee: '-', validity: '-' },
+                { group: '일반', type: '명예회원', entryFee: '', annualFee: '', validity: '' },
+                { group: '단체회원', type: '비영리단체', entryFee: '100,000원', annualFee: '120,000원', validity: '연회비 납부 후 2년' },
+                { group: '단체회원', type: '영리단체 SILVER', entryFee: '-', annualFee: '1,000,000원', validity: '연회비 납부 후 2년' },
+                { group: '단체회원', type: '영리단체 GOLD', entryFee: '-', annualFee: '2,000,000원', validity: '연회비 납부 후 2년' },
+                { group: '단체회원', type: '영리단체 PLATINUM', entryFee: '-', annualFee: '', validity: '연회비 납부 후 2년' }
+            ],
+            links: [
+                { buttonText: '회원가입신청 및 회비 결제 ▶ 바로가기', applyUrl: '' }
+            ]
+        };
+
+        // 1) 회원 구분 및 혜택 테이블 렌더링
+        function renderTiers(tiers) {
+            const tbody = document.getElementById('tiers-tbody');
+            tbody.innerHTML = tiers.map((item, idx) => {
+                const isHighlight = idx === 0;
+                const benefitsText = String(item.benefits || '-').trim();
+                const benefitsHtml = benefitsText === '-'
+                    ? '<span class="text-gray-400">-</span>'
+                    : `<ul class="space-y-2">${benefitsText.split('\n').filter(line => line.trim()).map(line => `<li>${line.trim()}</li>`).join('')}</ul>`;
+
+                return `
+                    <tr class="${isHighlight ? 'hover:bg-blue-50/40' : 'hover:bg-gray-50'} transition">
+                        <td class="px-6 py-5 font-bold ${isHighlight ? 'text-blue-700' : 'text-gray-900'} align-top whitespace-nowrap">${item.type || ''}</td>
+                        <td class="px-6 py-5 text-gray-800 leading-relaxed align-top">${item.qualification || ''}</td>
+                        <td class="px-6 py-5 text-gray-800 leading-relaxed align-top">${benefitsHtml}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 2) 회비 안내 테이블 렌더링 (연속된 동일 group 자동 병합)
+        function renderFees(fees) {
+            const tbody = document.getElementById('fees-tbody');
+            let html = '';
+
+            for (let i = 0; i < fees.length; i++) {
+                const row = fees[i];
+                const group = String(row.group || '일반').trim();
+                const entry = String(row.entryFee || '').trim();
+                const annual = String(row.annualFee || '').trim();
+                const validity = String(row.validity || '').trim();
+
+                let groupCellHtml = '';
+                if (group === '일반' || !group) {
+                    groupCellHtml = `<td colspan="2" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap">${row.type || ''}</td>`;
+                } else {
+                    // 이전 행과 같은 상위 그룹(예: 단체회원)인지 확인하여 rowspan 자동 계산
+                    const isFirstInGroup = (i === 0) || (String(fees[i - 1].group || '').trim() !== group);
+                    if (isFirstInGroup) {
+                        let spanCount = 1;
+                        while (i + spanCount < fees.length && String(fees[i + spanCount].group || '').trim() === group) {
+                            spanCount++;
+                        }
+                        groupCellHtml = `
+                            <td rowspan="${spanCount}" class="px-6 py-4 font-bold text-gray-900 bg-gray-50/60 border-r border-gray-200 align-middle whitespace-nowrap w-32">${group}</td>
+                            <td class="px-6 py-4 font-semibold text-gray-800 whitespace-nowrap">${row.type || ''}</td>
+                        `;
+                    } else {
+                        groupCellHtml = `<td class="px-6 py-4 font-semibold text-gray-800 whitespace-nowrap">${row.type || ''}</td>`;
+                    }
+                }
+
+                html += `
+                    <tr class="hover:bg-gray-50">
+                        ${groupCellHtml}
+                        <td class="px-6 py-4 text-right ${entry === '-' ? 'text-gray-400' : 'text-gray-800'} whitespace-nowrap">${entry}</td>
+                        <td class="px-6 py-4 text-right ${annual === '-' ? 'text-gray-400' : 'font-semibold text-gray-900'} whitespace-nowrap">${annual}</td>
+                        <td class="px-6 py-4 text-center ${validity === '-' ? 'text-gray-400' : 'text-gray-700'} whitespace-nowrap">${validity}</td>
+                    </tr>
+                `;
+            }
+            tbody.innerHTML = html;
+        }
+
+        // 3) 하단 신청 버튼 업데이트
+        function renderLink(links) {
+            const btn = document.getElementById('membership-apply-btn');
+            const textEl = document.getElementById('membership-apply-text');
+            const info = (links && links.length > 0) ? links[0] : {};
+
+            if (info.buttonText) {
+                textEl.innerText = info.buttonText;
+            }
+            const url = String(info.applyUrl || '').trim();
+            if (url && url.startsWith('http')) {
+                btn.href = url;
+                btn.onclick = null;
+            } else {
+                btn.href = '#';
+                btn.onclick = function (e) {
+                    e.preventDefault();
+                    alert('회원가입 신청 페이지(구글 폼) 연결 준비 중입니다.');
+                };
+            }
+        }
+
+        function renderAll(data) {
+            if (data.tiers && data.tiers.length > 0) renderTiers(data.tiers);
+            if (data.fees && data.fees.length > 0) renderFees(data.fees);
+            if (data.links) renderLink(data.links);
+        }
+
+        // 페이지 열리자마자 기본 데이터로 즉시 표시 후, 구글 시트에서 최신 내용 동기화
+        window.onload = function () {
+            renderAll(DEFAULT_DATA);
+
+            if (MEMBERSHIP_API_URL && MEMBERSHIP_API_URL.startsWith('http')) {
+                fetch(MEMBERSHIP_API_URL)
+                    .then(res => res.json())
+                    .then(sheetData => {
+                        renderAll(sheetData);
+                    })
+                    .catch(err => console.warn('구글 시트 동기화 대기 중:', err));
+            }
+        };
+    </script>
+</body>
+
+</html>

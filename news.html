@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Notice - 한국TOC협회</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        /* 데스크톱 환경 메뉴 호버 및 포커스 드롭다운 구현 */
+        .group:hover .dropdown-menu,
+        .group:focus-within .dropdown-menu {
+            display: block;
+        }
+
+        /* Quill 리치 텍스트 본문 렌더링 스타일 */
+        .news-prose p {
+            margin-bottom: 0.75rem;
+        }
+
+        .news-prose p:last-child {
+            margin-bottom: 0;
+        }
+
+        .news-prose h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 1.25rem 0 0.75rem;
+            color: #111827;
+        }
+
+        .news-prose h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 1.1rem 0 0.6rem;
+            color: #111827;
+        }
+
+        .news-prose h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin: 1rem 0 0.5rem;
+            color: #111827;
+        }
+
+        .news-prose ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin: 0.75rem 0;
+        }
+
+        .news-prose ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+            margin: 0.75rem 0;
+        }
+
+        .news-prose li {
+            margin: 0.25rem 0;
+        }
+
+        .news-prose blockquote {
+            border-left: 4px solid #2563eb;
+            padding: 0.25rem 0 0.25rem 1rem;
+            margin: 0.75rem 0;
+            color: #374151;
+            background-color: #f8fafc;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .news-prose a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        .news-prose .ql-align-center {
+            text-align: center;
+        }
+
+        .news-prose .ql-align-right {
+            text-align: right;
+        }
+
+        .news-prose .ql-align-justify {
+            text-align: justify;
+        }
+
+        .news-prose .ql-indent-1 {
+            padding-left: 2rem;
+        }
+
+        .news-prose .ql-indent-2 {
+            padding-left: 4rem;
+        }
+
+        .news-prose .ql-indent-3 {
+            padding-left: 6rem;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen overflow-x-clip">
+
+    <!-- 1. GNB (PC + 모바일 반응형 최종 통합 헤더) -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- 로고 -->
+                <div class="flex-shrink-0">
+                    <a href="index.html"
+                        class="text-xl md:text-2xl font-extrabold text-blue-700 tracking-tight">한국TOC협회</a>
+                </div>
+
+                <!-- 데스크톱 메뉴 (PC) -->
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <!-- WHAT IS TOC? -->
+                    <div class="relative group py-6">
+                        <button
+                            class="text-gray-700 hover:text-blue-600 font-semibold uppercase tracking-wider text-sm flex items-center gap-1">
+                            What is TOC?
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+                        <div
+                            class="dropdown-menu hidden absolute left-0 top-full mt-0 w-52 bg-white border border-gray-100 rounded-b-lg shadow-xl py-2">
+                            <a href="what-toc.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">TOC란?</a>
+                            <a href="5fs.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">5
+                                Focusing Steps</a>
+                            <a href="dbr.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Drum-Buffer-Rope
+                                (DBR)</a>
+                            <a href="ccpm.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">CCPM</a>
+                            <a href="ta.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Throughput
+                                Accounting</a>
+                            <a href="tp.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Thinking
+                                Process</a>
+                            <a href="mta.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">MTA</a>
+                        </div>
+                    </div>
+
+                    <a href="education.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Education</a>
+                    <a href="certification.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Certification</a>
+                    <a href="membership.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Membership</a>
+                    <a href="news.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">News</a>
+
+                    <!-- ABOUT US -->
+                    <div class="relative group py-6">
+                        <button
+                            class="text-gray-700 hover:text-blue-600 font-semibold uppercase tracking-wider text-sm flex items-center gap-1">
+                            About Us
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+                        <div
+                            class="dropdown-menu hidden absolute right-0 top-full mt-0 w-48 bg-white border border-gray-100 rounded-b-lg shadow-xl py-2">
+                            <a href="about.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">협회 소개
+                                및
+                                인사말</a>
+                            <a href="history.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">협회
+                                연혁</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- 모바일 햄버거 버튼 (스마트폰 전용) -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu()"
+                        class="text-gray-700 hover:text-blue-600 focus:outline-none p-2 rounded-lg" aria-label="메뉴 열기"
+                        aria-expanded="false">
+                        <svg id="icon-menu-open" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="icon-menu-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 모바일 펼침 메뉴 (버튼 클릭 시 열림) -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div class="px-4 pt-2 pb-5 space-y-1">
+                <!-- WHAT IS TOC? 아코디언 -->
+                <div>
+                    <button type="button" onclick="toggleMobileSubmenu('mobile-submenu-toc', 'icon-toc')"
+                        class="w-full flex justify-between items-center px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">
+                        <span>WHAT IS TOC?</span>
+                        <svg id="icon-toc" class="w-5 h-5 transition-transform duration-200" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="mobile-submenu-toc" class="hidden pl-4 pr-2 py-1 space-y-1 bg-gray-50 rounded-lg mt-1">
+                        <a href="what-toc.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· TOC란?</a>
+                        <a href="5fs.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· 5
+                            Focusing Steps</a>
+                        <a href="dbr.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Drum-Buffer-Rope (DBR)</a>
+                        <a href="ccpm.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            CCPM</a>
+                        <a href="ta.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Throughput Accounting</a>
+                        <a href="tp.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Thinking Process</a>
+                        <a href="mta.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            MTA</a>
+                    </div>
+                </div>
+
+                <a href="education.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">EDUCATION</a>
+                <a href="certification.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">CERTIFICATION</a>
+                <a href="membership.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">MEMBERSHIP</a>
+                <a href="news.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">NEWS</a>
+
+                <!-- ABOUT US 아코디언 -->
+                <div>
+                    <button type="button" onclick="toggleMobileSubmenu('mobile-submenu-about', 'icon-about')"
+                        class="w-full flex justify-between items-center px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">
+                        <span>ABOUT US</span>
+                        <svg id="icon-about" class="w-5 h-5 transition-transform duration-200" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="mobile-submenu-about" class="hidden pl-4 pr-2 py-1 space-y-1 bg-gray-50 rounded-lg mt-1">
+                        <a href="about.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            협회 소개 및 인사말</a>
+                        <a href="history.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· 협회 연혁</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        function toggleMobileMenu(forceClose) {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            const openIcon = document.getElementById('icon-menu-open');
+            const closeIcon = document.getElementById('icon-menu-close');
+            if (!menu) return;
+
+            const isHidden = forceClose === true ? true : menu.classList.toggle('hidden');
+            if (forceClose === true) menu.classList.add('hidden');
+            if (btn) {
+                btn.setAttribute('aria-expanded', String(!isHidden));
+                btn.setAttribute('aria-label', isHidden ? '메뉴 열기' : '메뉴 닫기');
+            }
+            if (openIcon) openIcon.classList.toggle('hidden', !isHidden);
+            if (closeIcon) closeIcon.classList.toggle('hidden', isHidden);
+        }
+
+        function toggleMobileSubmenu(menuId, iconId) {
+            const targetMenu = document.getElementById(menuId || 'mobile-submenu');
+            const targetIcon = document.getElementById(iconId || 'mobile-submenu-icon');
+            if (targetMenu) targetMenu.classList.toggle('hidden');
+            if (targetIcon) targetIcon.classList.toggle('rotate-180');
+        }
+
+        (function initHeaderNavigation() {
+            const currentPage = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+            const header = document.querySelector('header');
+            if (!header) return;
+
+            header.querySelectorAll('a[href]').forEach((link) => {
+                const href = (link.getAttribute('href') || '').toLowerCase();
+                if (href && href === currentPage && !link.closest('.flex-shrink-0')) {
+                    link.classList.remove('text-gray-700', 'text-gray-800');
+                    link.classList.add('text-blue-600', 'font-bold');
+                    link.setAttribute('aria-current', 'page');
+
+                    const mobileSub = link.closest('[id^="mobile-submenu-"]');
+                    if (mobileSub) {
+                        mobileSub.classList.remove('hidden');
+                        const subBtn = mobileSub.previousElementSibling;
+                        const subIcon = subBtn ? subBtn.querySelector('svg') : null;
+                        if (subBtn) {
+                            subBtn.classList.remove('text-gray-800');
+                            subBtn.classList.add('text-blue-600');
+                        }
+                        if (subIcon) subIcon.classList.add('rotate-180');
+                    }
+
+                    const pcDropdown = link.closest('.dropdown-menu');
+                    if (pcDropdown && pcDropdown.previousElementSibling) {
+                        pcDropdown.previousElementSibling.classList.remove('text-gray-700');
+                        pcDropdown.previousElementSibling.classList.add('text-blue-600');
+                    }
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768) toggleMobileMenu(true);
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') toggleMobileMenu(true);
+            });
+        })();
+    </script>
+
+    <!-- 2. 타이틀 배너 -->
+    <div class="bg-blue-600 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight">News & Notice</h1>
+            <p class="mt-3 text-blue-100 text-base md:text-lg max-w-3xl mx-auto">
+                한국TOC협회의 공지사항과 최신 세미나, 자료 소식을 전해드립니다.
+            </p>
+        </div>
+    </div>
+
+    <!-- 3. 메인 콘텐츠 (게시판 테이블) -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+
+        <!-- 상단 요약 및 검색바 -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div class="flex items-center gap-3">
+                <div class="text-base text-gray-700 font-medium">
+                    전체 게시물 <span id="post-count" class="font-bold text-blue-600">0</span>건
+                </div>
+                <a href="news-admin.html"
+                    class="inline-flex items-center gap-1 text-xs font-semibold text-gray-500 hover:text-blue-600 bg-white border border-gray-200 hover:border-blue-300 px-2.5 py-1 rounded-lg transition">
+                    관리자
+                </a>
+            </div>
+            <div class="relative w-full sm:w-72">
+                <input type="text" id="search-input" oninput="filterPosts()" placeholder="제목 또는 내용 검색..."
+                    class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Supabase 연결 상태 안내 배너 (오류 시에만 표시) -->
+        <div id="news-status-banner"
+            class="hidden mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        </div>
+
+        <!-- 게시판 목록 테이블 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 text-base break-keep">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 sm:px-6 py-4 text-center font-bold text-gray-800 w-20 whitespace-nowrap">번호
+                            </th>
+                            <th class="px-4 sm:px-6 py-4 text-left font-bold text-gray-800">제목</th>
+                            <th
+                                class="px-4 sm:px-6 py-4 text-center font-bold text-gray-800 w-32 sm:w-36 whitespace-nowrap">
+                                일자</th>
+                        </tr>
+                    </thead>
+                    <tbody id="news-tbody" class="divide-y divide-gray-200 bg-white">
+                        <tr>
+                            <td colspan="3" class="px-6 py-12 text-center text-gray-500">게시물을 불러오는 중입니다...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 4. 게시물 상세 보기 팝업창 (모달) -->
+    <div id="post-modal"
+        class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+        onclick="closeModalOnBackdrop(event)">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden"
+            onclick="event.stopPropagation()">
+            <!-- 모달 헤더 -->
+            <div class="px-6 py-5 border-b border-gray-200 flex justify-between items-start gap-4 bg-gray-50/80">
+                <div>
+                    <div class="flex items-center gap-2 text-sm text-gray-500 mb-1">
+                        <span id="modal-no" class="font-bold text-blue-600">No. 1</span>
+                        <span>|</span>
+                        <span id="modal-date">2026-11-13</span>
+                    </div>
+                    <h3 id="modal-title" class="text-xl sm:text-2xl font-bold text-gray-900 leading-snug break-keep">게시물
+                        제목</h3>
+                </div>
+                <button type="button" onclick="closePostModal()"
+                    class="text-gray-400 hover:text-gray-700 p-1.5 rounded-lg hover:bg-gray-200/70 transition flex-shrink-0"
+                    aria-label="닫기">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- 모달 본문 (스크롤 영역) -->
+            <div class="p-6 sm:p-8 overflow-y-auto space-y-6 text-gray-800 text-base leading-relaxed">
+                <!-- 텍스트/리치 HTML 본문 -->
+                <div id="modal-content" class="news-prose break-keep"></div>
+
+                <!-- 이미지 영역 (있을 때만 표시) -->
+                <div id="modal-image-box" class="hidden rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
+                    <img id="modal-image" src="" alt="첨부 이미지"
+                        class="w-full h-auto max-h-[500px] object-contain mx-auto">
+                </div>
+
+                <!-- 동영상(유튜브) 플레이어 영역 (있을 때만 표시) -->
+                <div id="modal-video-box"
+                    class="hidden rounded-xl overflow-hidden border border-gray-200 bg-black aspect-video">
+                    <iframe id="modal-video" class="w-full h-full" src="" title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+
+                <!-- 첨부문서 및 관련링크 버튼 영역 (있을 때만 표시) -->
+                <div id="modal-attachments" class="hidden pt-4 border-t border-gray-100 flex flex-wrap gap-3">
+                    <a id="modal-doc-btn" href="#" target="_blank" rel="noopener noreferrer"
+                        class="hidden inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold rounded-xl text-sm transition">
+                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <span id="modal-doc-text">첨부문서 보기</span>
+                    </a>
+                    <a id="modal-link-btn" href="#" target="_blank" rel="noopener noreferrer"
+                        class="hidden inline-flex items-center gap-2 px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-xl text-sm transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                            </path>
+                        </svg>
+                        <span id="modal-link-text">관련 링크 바로가기</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 모달 푸터 -->
+            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end">
+                <button type="button" onclick="closePostModal()"
+                    class="px-6 py-2.5 bg-gray-800 hover:bg-gray-900 text-white font-bold rounded-xl text-sm transition">
+                    목록으로 돌아가기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Footer (공통 표준 규격 푸터) -->
+    <footer class="bg-gray-900 text-gray-400 py-6 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div class="space-y-1 text-sm flex-grow">
+                <p class="text-white font-bold mb-3">사단법인 한국티오시협회</p>
+                <p>주소: 서울 서초구 강남대로 309 (코리아비지니스센타) 1814호</p>
+                <p>전화: 02-312-8504</p>
+                <p>대표메일: tockorea@tockorea.org <span class="hidden sm:inline mx-2">|</span><br class="sm:hidden"> 아카데미:
+                    academy@tockorea.org</p>
+            </div>
+            <div class="text-sm text-gray-500 whitespace-nowrap">
+                &copy; 2026 TOC Korea. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- 6. 게시판 동작 및 Supabase 연동 스크립트 -->
+    <script>
+        const SUPABASE_URL = 'https://buzqfxcouwfwownbxyxh.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_miB772zis3F0QGdYxnzuHQ_OU78WPV0';
+        const SUPABASE_TABLE = 'news';
+
+        let allPosts = [];
+        let filteredPosts = [];
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function sanitizeUrl(url) {
+            const trimmed = String(url || '').trim();
+            if (!trimmed) return '';
+            if (/^(https?:\/\/|\/|\.\/|[a-zA-Z0-9_-]+\.html([?#].*)?$)/i.test(trimmed)) {
+                return trimmed;
+            }
+            return '';
+        }
+
+        function formatDateText(value) {
+            if (!value) return '';
+            const str = String(value).trim();
+            const isoMatch = str.match(/^(\d{4}-\d{2}-\d{2})/);
+            if (isoMatch) return isoMatch[1];
+            return str;
+        }
+
+        function normalizePost(row, index, total) {
+            const rawNo = row.no ?? row.num ?? row.post_no ?? row['번호'] ?? row.id;
+            const parsedNo = Number(rawNo);
+            return {
+                no: rawNo !== undefined && rawNo !== null && String(rawNo).trim() !== ''
+                    ? (Number.isFinite(parsedNo) ? parsedNo : String(rawNo).trim())
+                    : (total - index),
+                title: String(row.title ?? row['제목'] ?? '').trim(),
+                date: formatDateText(row.date ?? row.published_at ?? row.created_at ?? row['일자'] ?? ''),
+                content: String(row.content ?? row.body ?? row['내용'] ?? ''),
+                imageUrl: String(row.imageUrl ?? row.image_url ?? row.image ?? row['이미지'] ?? '').trim(),
+                videoUrl: String(row.videoUrl ?? row.video_url ?? row.video ?? row['동영상'] ?? '').trim(),
+                docUrl: String(row.docUrl ?? row.doc_url ?? row.doc ?? row['문서'] ?? '').trim(),
+                docName: String(row.docName ?? row.doc_name ?? row['문서명'] ?? '').trim(),
+                linkUrl: String(row.linkUrl ?? row.link_url ?? row.link ?? row['링크'] ?? '').trim(),
+                linkName: String(row.linkName ?? row.link_name ?? row['링크명'] ?? '').trim()
+            };
+        }
+
+        // 구글 드라이브 이미지 공유 링크를 웹 표시용 이미지 주소로 자동 변환
+        function formatImageUrl(url) {
+            const safeUrl = sanitizeUrl(url);
+            if (!safeUrl) return '';
+            const driveMatch = safeUrl.match(/\/d\/([a-zA-Z0-9_-]+)/) || safeUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (safeUrl.includes('drive.google.com') && driveMatch) {
+                return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+            }
+            return safeUrl;
+        }
+
+        // 일반 유튜브 링크를 임베드(Embed) 플레이어 주소로 자동 변환
+        function formatYoutubeUrl(url) {
+            if (!url) return '';
+            const trimmed = String(url).trim();
+            const ytMatch = trimmed.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+            if (ytMatch) {
+                return `https://www.youtube.com/embed/${ytMatch[1]}`;
+            }
+            return '';
+        }
+
+        // 게시판 테이블 렌더링
+        function renderTable(posts) {
+            const tbody = document.getElementById('news-tbody');
+            document.getElementById('post-count').innerText = posts.length;
+
+            if (!posts || posts.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="px-6 py-12 text-center text-gray-500">등록된 게시물이 없습니다.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = posts.map((post, index) => {
+                let badges = '';
+                if (post.imageUrl) badges += '<span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700">이미지</span>';
+                if (post.videoUrl) badges += '<span class="ml-1.5 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-50 text-red-700">동영상</span>';
+                if (post.docUrl) badges += '<span class="ml-1.5 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700">문서</span>';
+                if (post.linkUrl) badges += '<span class="ml-1.5 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700">링크</span>';
+
+                return `
+                    <tr onclick="openPostModal(${index})" class="hover:bg-blue-50/60 cursor-pointer transition group">
+                        <td class="px-4 sm:px-6 py-4 text-center text-gray-600 font-medium whitespace-nowrap">${escapeHtml(post.no || (posts.length - index))}</td>
+                        <td class="px-4 sm:px-6 py-4 font-semibold text-gray-900 group-hover:text-blue-700 transition">
+                            <span>${escapeHtml(post.title)}</span>${badges}
+                        </td>
+                        <td class="px-4 sm:px-6 py-4 text-center text-gray-500 text-sm whitespace-nowrap">${escapeHtml(post.date)}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function stripHtml(html) {
+            const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
+            return doc.body.textContent || '';
+        }
+
+        function sanitizeRichHtml(html) {
+            const allowedTags = new Set([
+                'P', 'BR', 'STRONG', 'B', 'EM', 'I', 'U', 'S', 'DEL',
+                'H1', 'H2', 'H3', 'H4', 'UL', 'OL', 'LI',
+                'BLOCKQUOTE', 'PRE', 'CODE', 'A', 'SPAN', 'DIV', 'IMG'
+            ]);
+            const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
+
+            function cleanNode(node) {
+                Array.from(node.childNodes).forEach(child => {
+                    if (child.nodeType !== Node.ELEMENT_NODE) return;
+                    const tag = child.tagName.toUpperCase();
+                    if (!allowedTags.has(tag)) {
+                        child.remove();
+                        return;
+                    }
+
+                    Array.from(child.attributes).forEach(attr => {
+                        const name = attr.name.toLowerCase();
+                        const val = attr.value;
+                        if (name === 'class') {
+                            const safeClasses = val.split(/\s+/).filter(c => /^ql-(align|indent)-[\w-]+$/.test(c));
+                            if (safeClasses.length) child.setAttribute('class', safeClasses.join(' '));
+                            else child.removeAttribute('class');
+                        } else if (name === 'style') {
+                            const safeStyles = val.split(';')
+                                .map(s => s.trim())
+                                .filter(s => /^(color|background-color|text-align)\s*:/i.test(s));
+                            if (safeStyles.length) child.setAttribute('style', safeStyles.join('; '));
+                            else child.removeAttribute('style');
+                        } else if (tag === 'A' && name === 'href') {
+                            const safeHref = sanitizeUrl(val);
+                            if (safeHref) {
+                                child.setAttribute('href', safeHref);
+                                child.setAttribute('target', '_blank');
+                                child.setAttribute('rel', 'noopener noreferrer');
+                            } else {
+                                child.removeAttribute('href');
+                            }
+                        } else if (tag === 'IMG' && (name === 'src' || name === 'alt')) {
+                            if (name === 'src') {
+                                const safeSrc = formatImageUrl(val);
+                                if (safeSrc) child.setAttribute('src', safeSrc);
+                                else child.remove();
+                            }
+                        } else {
+                            child.removeAttribute(attr.name);
+                        }
+                    });
+
+                    cleanNode(child);
+                });
+            }
+
+            cleanNode(doc.body);
+            return doc.body.innerHTML;
+        }
+
+        function renderPostContent(targetEl, rawContent) {
+            const content = String(rawContent || '');
+            if (/<[a-z][\s\S]*>/i.test(content)) {
+                targetEl.classList.remove('whitespace-pre-line');
+                targetEl.innerHTML = sanitizeRichHtml(content);
+            } else {
+                targetEl.classList.add('whitespace-pre-line');
+                targetEl.innerText = content;
+            }
+        }
+
+        // 검색 필터
+        function filterPosts() {
+            const keyword = document.getElementById('search-input').value.toLowerCase().trim();
+            filteredPosts = allPosts.filter(p =>
+                String(p.title || '').toLowerCase().includes(keyword) ||
+                stripHtml(p.content).toLowerCase().includes(keyword)
+            );
+            renderTable(filteredPosts);
+        }
+
+        // 상세 팝업창 열기
+        function openPostModal(index) {
+            const post = filteredPosts[index];
+            if (!post) return;
+
+            document.getElementById('modal-no').innerText = `No. ${post.no || ''}`;
+            document.getElementById('modal-date').innerText = post.date || '';
+            document.getElementById('modal-title').innerText = post.title || '';
+            renderPostContent(document.getElementById('modal-content'), post.content);
+
+            // 1) 이미지 처리
+            const imgUrl = formatImageUrl(post.imageUrl);
+            const imgBox = document.getElementById('modal-image-box');
+            const imgEl = document.getElementById('modal-image');
+            if (imgUrl) {
+                imgEl.src = imgUrl;
+                imgBox.classList.remove('hidden');
+            } else {
+                imgEl.src = '';
+                imgBox.classList.add('hidden');
+            }
+
+            // 2) 유튜브 동영상 처리
+            const ytUrl = formatYoutubeUrl(post.videoUrl);
+            const vidBox = document.getElementById('modal-video-box');
+            const vidEl = document.getElementById('modal-video');
+            if (ytUrl) {
+                vidEl.src = ytUrl;
+                vidBox.classList.remove('hidden');
+            } else {
+                vidEl.src = '';
+                vidBox.classList.add('hidden');
+            }
+
+            // 3) 첨부문서 및 관련링크 처리
+            const docUrl = sanitizeUrl(post.docUrl);
+            const docName = post.docName || '첨부문서 보기';
+            const linkUrl = sanitizeUrl(post.linkUrl);
+            const linkName = post.linkName || '관련 링크 바로가기';
+
+            const attachBox = document.getElementById('modal-attachments');
+            const docBtn = document.getElementById('modal-doc-btn');
+            const linkBtn = document.getElementById('modal-link-btn');
+
+            if (docUrl) {
+                docBtn.href = docUrl;
+                document.getElementById('modal-doc-text').innerText = docName;
+                docBtn.classList.remove('hidden');
+            } else {
+                docBtn.href = '#';
+                docBtn.classList.add('hidden');
+            }
+
+            if (linkUrl) {
+                linkBtn.href = linkUrl;
+                document.getElementById('modal-link-text').innerText = linkName;
+                linkBtn.classList.remove('hidden');
+            } else {
+                linkBtn.href = '#';
+                linkBtn.classList.add('hidden');
+            }
+
+            if (docUrl || linkUrl) {
+                attachBox.classList.remove('hidden');
+            } else {
+                attachBox.classList.add('hidden');
+            }
+
+            document.getElementById('post-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 상세 팝업창 닫기 (닫을 때 유튜브 재생 중지)
+        function closePostModal() {
+            document.getElementById('post-modal').classList.add('hidden');
+            document.getElementById('modal-video').src = '';
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnBackdrop(e) {
+            if (e.target === document.getElementById('post-modal')) {
+                closePostModal();
+            }
+        }
+
+        function showStatusBanner(message) {
+            const banner = document.getElementById('news-status-banner');
+            if (!banner) return;
+            banner.innerText = message;
+            banner.classList.remove('hidden');
+        }
+
+        async function loadPostsFromSupabase() {
+            const tbody = document.getElementById('news-tbody');
+            const endpoint = `${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}?select=*`;
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'GET',
+                    headers: {
+                        apikey: SUPABASE_KEY,
+                        Accept: 'application/json'
+                    }
+                });
+
+                if (!res.ok) {
+                    let errMessage = `HTTP ${res.status}`;
+                    try {
+                        const errJson = await res.json();
+                        if (errJson && errJson.message) {
+                            errMessage = `${errJson.message}${errJson.hint ? ` (${errJson.hint})` : ''}`;
+                        }
+                    } catch (_) { }
+                    throw new Error(errMessage);
+                }
+
+                const rows = await res.json();
+                if (!Array.isArray(rows)) {
+                    throw new Error('Supabase 응답 형식이 배열이 아닙니다.');
+                }
+
+                const normalized = rows.map((row, idx) => normalizePost(row, idx, rows.length));
+                normalized.sort((a, b) => {
+                    const noA = Number(a.no);
+                    const noB = Number(b.no);
+                    if (Number.isFinite(noA) && Number.isFinite(noB) && noA !== noB) {
+                        return noB - noA;
+                    }
+                    return String(b.date).localeCompare(String(a.date));
+                });
+
+                allPosts = normalized;
+                filteredPosts = allPosts;
+                renderTable(filteredPosts);
+            } catch (err) {
+                console.error('Supabase 데이터 불러오기 실패:', err);
+                showStatusBanner(`Supabase 데이터를 불러오지 못했습니다: ${err.message}`);
+                tbody.innerHTML = '<tr><td colspan="3" class="px-6 py-12 text-center text-red-500">게시물을 불러올 수 없습니다. Supabase 테이블 권한(SELECT/RLS)을 확인해 주세요.</td></tr>';
+                document.getElementById('post-count').innerText = '0';
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePostModal();
+        });
+
+        document.addEventListener('DOMContentLoaded', loadPostsFromSupabase);
+    </script>
+</body>
+
+</html>

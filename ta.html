@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throughput Accounting (TA) - 한국TOC협회</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        /* 데스크톱 환경 메뉴 호버 및 포커스 드롭다운 구현 */
+        .group:hover .dropdown-menu,
+        .group:focus-within .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen overflow-x-clip">
+
+    <!-- 1. GNB (PC + 모바일 반응형 최종 통합 헤더) -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- 로고 -->
+                <div class="flex-shrink-0">
+                    <a href="index.html"
+                        class="text-xl md:text-2xl font-extrabold text-blue-700 tracking-tight">한국TOC협회</a>
+                </div>
+
+                <!-- 데스크톱 메뉴 (PC) -->
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <!-- WHAT IS TOC? -->
+                    <div class="relative group py-6">
+                        <button
+                            class="text-gray-700 hover:text-blue-600 font-semibold uppercase tracking-wider text-sm flex items-center gap-1">
+                            What is TOC?
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+                        <div
+                            class="dropdown-menu hidden absolute left-0 top-full mt-0 w-52 bg-white border border-gray-100 rounded-b-lg shadow-xl py-2">
+                            <a href="what-toc.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">TOC란?</a>
+                            <a href="5fs.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">5
+                                Focusing Steps</a>
+                            <a href="dbr.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Drum-Buffer-Rope
+                                (DBR)</a>
+                            <a href="ccpm.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">CCPM</a>
+                            <a href="ta.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Throughput
+                                Accounting</a>
+                            <a href="tp.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Thinking
+                                Process</a>
+                            <a href="mta.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">MTA</a>
+                        </div>
+                    </div>
+
+                    <a href="education.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Education</a>
+                    <a href="certification.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Certification</a>
+                    <a href="membership.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Membership</a>
+                    <a href="news.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">News</a>
+
+                    <!-- ABOUT US -->
+                    <div class="relative group py-6">
+                        <button
+                            class="text-gray-700 hover:text-blue-600 font-semibold uppercase tracking-wider text-sm flex items-center gap-1">
+                            About Us
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+                        <div
+                            class="dropdown-menu hidden absolute right-0 top-full mt-0 w-48 bg-white border border-gray-100 rounded-b-lg shadow-xl py-2">
+                            <a href="about.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">협회 소개
+                                및
+                                인사말</a>
+                            <a href="history.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">협회
+                                연혁</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- 모바일 햄버거 버튼 (스마트폰 전용) -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu()"
+                        class="text-gray-700 hover:text-blue-600 focus:outline-none p-2 rounded-lg"
+                        aria-label="메뉴 열기" aria-expanded="false">
+                        <svg id="icon-menu-open" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="icon-menu-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 모바일 펼침 메뉴 (버튼 클릭 시 열림) -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div class="px-4 pt-2 pb-5 space-y-1">
+                <!-- WHAT IS TOC? 아코디언 -->
+                <div>
+                    <button type="button" onclick="toggleMobileSubmenu('mobile-submenu-toc', 'icon-toc')"
+                        class="w-full flex justify-between items-center px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">
+                        <span>WHAT IS TOC?</span>
+                        <svg id="icon-toc" class="w-5 h-5 transition-transform duration-200" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="mobile-submenu-toc" class="hidden pl-4 pr-2 py-1 space-y-1 bg-gray-50 rounded-lg mt-1">
+                        <a href="what-toc.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· TOC란?</a>
+                        <a href="5fs.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· 5
+                            Focusing Steps</a>
+                        <a href="dbr.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Drum-Buffer-Rope (DBR)</a>
+                        <a href="ccpm.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            CCPM</a>
+                        <a href="ta.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Throughput Accounting</a>
+                        <a href="tp.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Thinking Process</a>
+                        <a href="mta.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            MTA</a>
+                    </div>
+                </div>
+
+                <a href="education.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">EDUCATION</a>
+                <a href="certification.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">CERTIFICATION</a>
+                <a href="membership.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">MEMBERSHIP</a>
+                <a href="news.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">NEWS</a>
+
+                <!-- ABOUT US 아코디언 -->
+                <div>
+                    <button type="button" onclick="toggleMobileSubmenu('mobile-submenu-about', 'icon-about')"
+                        class="w-full flex justify-between items-center px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">
+                        <span>ABOUT US</span>
+                        <svg id="icon-about" class="w-5 h-5 transition-transform duration-200" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="mobile-submenu-about" class="hidden pl-4 pr-2 py-1 space-y-1 bg-gray-50 rounded-lg mt-1">
+                        <a href="about.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            협회 소개 및 인사말</a>
+                        <a href="history.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· 협회 연혁</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        function toggleMobileMenu(forceClose) {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            const openIcon = document.getElementById('icon-menu-open');
+            const closeIcon = document.getElementById('icon-menu-close');
+            if (!menu) return;
+
+            const isHidden = forceClose === true ? true : menu.classList.toggle('hidden');
+            if (forceClose === true) menu.classList.add('hidden');
+            if (btn) {
+                btn.setAttribute('aria-expanded', String(!isHidden));
+                btn.setAttribute('aria-label', isHidden ? '메뉴 열기' : '메뉴 닫기');
+            }
+            if (openIcon) openIcon.classList.toggle('hidden', !isHidden);
+            if (closeIcon) closeIcon.classList.toggle('hidden', isHidden);
+        }
+
+        function toggleMobileSubmenu(menuId, iconId) {
+            const targetMenu = document.getElementById(menuId || 'mobile-submenu');
+            const targetIcon = document.getElementById(iconId || 'mobile-submenu-icon');
+            if (targetMenu) targetMenu.classList.toggle('hidden');
+            if (targetIcon) targetIcon.classList.toggle('rotate-180');
+        }
+
+        (function initHeaderNavigation() {
+            const currentPage = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+            const header = document.querySelector('header');
+            if (!header) return;
+
+            header.querySelectorAll('a[href]').forEach((link) => {
+                const href = (link.getAttribute('href') || '').toLowerCase();
+                if (href && href === currentPage && !link.closest('.flex-shrink-0')) {
+                    link.classList.remove('text-gray-700', 'text-gray-800');
+                    link.classList.add('text-blue-600', 'font-bold');
+                    link.setAttribute('aria-current', 'page');
+
+                    const mobileSub = link.closest('[id^="mobile-submenu-"]');
+                    if (mobileSub) {
+                        mobileSub.classList.remove('hidden');
+                        const subBtn = mobileSub.previousElementSibling;
+                        const subIcon = subBtn ? subBtn.querySelector('svg') : null;
+                        if (subBtn) {
+                            subBtn.classList.remove('text-gray-800');
+                            subBtn.classList.add('text-blue-600');
+                        }
+                        if (subIcon) subIcon.classList.add('rotate-180');
+                    }
+
+                    const pcDropdown = link.closest('.dropdown-menu');
+                    if (pcDropdown && pcDropdown.previousElementSibling) {
+                        pcDropdown.previousElementSibling.classList.remove('text-gray-700');
+                        pcDropdown.previousElementSibling.classList.add('text-blue-600');
+                    }
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768) toggleMobileMenu(true);
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') toggleMobileMenu(true);
+            });
+        })();
+    </script>
+
+    <!-- 2. 서브 페이지 타이틀 배너 -->
+    <div class="bg-blue-600 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <p class="text-blue-200 text-sm font-semibold uppercase tracking-wider mb-2">WHAT IS TOC?</p>
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Throughput Accounting (TA)</h1>
+        </div>
+    </div>
+
+    <!-- 3. 메인 콘텐츠 영역 -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 w-full flex flex-col md:flex-row gap-8 break-keep">
+
+        <!-- 왼쪽 사이드바 메뉴 (LNB) -->
+        <aside class="w-full md:w-64 flex-shrink-0">
+            <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden md:sticky md:top-28">
+                <div class="bg-gray-50 border-b border-gray-200 px-5 py-3.5 md:py-4">
+                    <h2 class="font-bold text-gray-800 text-sm md:text-base">WHAT IS TOC?</h2>
+                </div>
+                <ul class="flex flex-wrap md:flex-col gap-1.5 md:gap-0 p-3 md:p-0 text-xs sm:text-sm">
+                    <li><a href="what-toc.html"
+                            class="block px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-none text-gray-600 hover:bg-gray-50 hover:text-blue-600 border border-gray-200 md:border-0 md:border-l-4 md:border-transparent transition">TOC란?</a>
+                    </li>
+                    <li><a href="5fs.html"
+                            class="block px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-none text-gray-600 hover:bg-gray-50 hover:text-blue-600 border border-gray-200 md:border-0 md:border-l-4 md:border-transparent transition">5
+                            Focusing Steps</a></li>
+                    <li><a href="dbr.html"
+                            class="block px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-none text-gray-600 hover:bg-gray-50 hover:text-blue-600 border border-gray-200 md:border-0 md:border-l-4 md:border-transparent transition">Drum-Buffer-Rope
+                            (DBR)</a></li>
+                    <li><a href="ccpm.html"
+                            class="block px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-none text-gray-600 hover:bg-gray-50 hover:text-blue-600 border border-gray-200 md:border-0 md:border-l-4 md:border-transparent transition">CCPM</a>
+                    </li>
+                    <li><a href="ta.html"
+                            class="block px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-none bg-blue-50 text-blue-700 font-bold border border-blue-200 md:border-0 md:border-l-4 md:border-blue-600">Throughput
+                            Accounting</a></li>
+                    <li><a href="tp.html"
+                            class="block px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-none text-gray-600 hover:bg-gray-50 hover:text-blue-600 border border-gray-200 md:border-0 md:border-l-4 md:border-transparent transition">Thinking
+                            Process (TP)</a></li>
+                    <li><a href="mta.html"
+                            class="block px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-none text-gray-600 hover:bg-gray-50 hover:text-blue-600 border border-gray-200 md:border-0 md:border-l-4 md:border-transparent transition">MTA</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- 우측 본문 콘텐츠 -->
+        <section class="flex-grow min-w-0 bg-white border border-gray-200 rounded-xl p-6 sm:p-10 shadow-sm space-y-12">
+
+            <!-- 섹션 1: 쓰루풋회계 개요 -->
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b border-gray-100 flex items-center">
+                    <span class="w-2 h-6 bg-blue-600 rounded-full mr-3"></span>
+                    쓰루풋회계(Throughput Accounting) 개요
+                </h2>
+
+                <div class="bg-blue-50/80 border-l-4 border-blue-600 p-6 rounded-r-xl">
+                    <p class="text-lg sm:text-xl font-bold text-blue-900 leading-relaxed">
+                        “쓰루풋회계는 돈의 흐름을 쓰루풋(Throughput), 재고/투자(Inventory/Investment), 그리고 운영비용(Operating Expense)으로 구분하여
+                        파악한다.”
+                    </p>
+                </div>
+            </div>
+
+            <!-- 섹션 2: 3대 핵심 지표 (T, I, OE) -->
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b border-gray-100 flex items-center">
+                    <span class="w-2 h-6 bg-blue-600 rounded-full mr-3"></span>
+                    쓰루풋회계의 3대 핵심 지표 (T · I · OE)
+                </h2>
+
+                <div class="space-y-6">
+                    <!-- 1. Throughput (T) -->
+                    <div class="border border-gray-200 rounded-xl p-6 hover:border-blue-400 transition bg-white">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span
+                                class="w-9 h-9 rounded-lg bg-blue-600 text-white font-extrabold flex items-center justify-center text-lg">T</span>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Throughput (쓰루풋)</h3>
+                                <p class="text-xs text-blue-600 font-semibold">판매를 통해 신규 유입되는 자금</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            시스템이 판매에 의해 돈을 창출하는 속도입니다. 쓰루풋은 <strong>매출가격에서 순수변동비를 제외한 금액</strong>입니다.
+                        </p>
+                        <div class="bg-blue-50/70 border border-blue-100 rounded-lg p-4 text-sm text-blue-900">
+                            <strong>💡 계산 예시:</strong> 만약 어떤 제품을 <strong>100원</strong>에 판매했는데, 재료비가
+                            <strong>30원</strong>이었다면, 쓰루풋(T)은 <strong>70원</strong>입니다.
+                        </div>
+                    </div>
+
+                    <!-- 2. Inventory / Investment (I) -->
+                    <div class="border border-gray-200 rounded-xl p-6 hover:border-indigo-400 transition bg-white">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span
+                                class="w-9 h-9 rounded-lg bg-indigo-600 text-white font-extrabold flex items-center justify-center text-lg">I</span>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Inventory / Investment (재고/투자)</h3>
+                                <p class="text-xs text-indigo-600 font-semibold">판매 목적의 구매품이나 설비에 투자한 자금</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed mb-3">
+                            회사가 판매하려는 의도로 물건을 구매하는데 투자한 모든 돈으로서, <strong>묶여 있는 돈</strong>입니다. 재고, 건물, 기계 등이 포함됩니다.
+                        </p>
+                        <p class="text-sm text-gray-600 bg-gray-50 p-3.5 rounded-lg border border-gray-100">
+                            ※ 반제품이나 완제품 재고의 평가는 기존 원가회계 방법과 다르게 <strong>재료의 구입가로 평가</strong>합니다.
+                        </p>
+                    </div>
+
+                    <!-- 3. Operating Expenses (OE) -->
+                    <div class="border border-gray-200 rounded-xl p-6 hover:border-teal-400 transition bg-white">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span
+                                class="w-9 h-9 rounded-lg bg-teal-600 text-white font-extrabold flex items-center justify-center text-lg">OE</span>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Operating Expenses (운영비용)</h3>
+                                <p class="text-xs text-teal-600 font-semibold">I를 쓰루풋(T)으로 바꾸기 위해 시스템이 사용하는 비용</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed">
+                            시스템이 투자한 것을 쓰루풋으로 전환하는데 소비한 모든 돈입니다. 제조경비와 판매 및 일반관리비로 구분하지 않으며, <strong>급여, 노무비, 전기세, 광고비,
+                                접대비</strong> 등이 포함됩니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 섹션 3: 요약 및 수익성 향상 관계 -->
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b border-gray-100 flex items-center">
+                    <span class="w-2 h-6 bg-blue-600 rounded-full mr-3"></span>
+                    수익성 향상과 T · I · OE의 관계
+                </h2>
+
+                <!-- 3요소 액션 플랜 -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-blue-900">쓰루풋 (T)</span>
+                            <span class="px-2.5 py-0.5 bg-blue-600 text-white text-xs font-bold rounded-full">증가
+                                ↑</span>
+                        </div>
+                        <p class="text-sm text-blue-900/90 leading-relaxed">
+                            매출을 늘리거나 품질활동에 의해 재료비를 줄이면 <strong>T가 늘어납니다.</strong>
+                        </p>
+                    </div>
+
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-indigo-900">재고/투자 (I)</span>
+                            <span class="px-2.5 py-0.5 bg-indigo-600 text-white text-xs font-bold rounded-full">억제
+                                ↓</span>
+                        </div>
+                        <p class="text-sm text-indigo-900/90 leading-relaxed">
+                            설비 투자에 신중하면 불필요한 <strong>I 증가를 막을 수 있습니다.</strong>
+                        </p>
+                    </div>
+
+                    <div class="bg-teal-50 border border-teal-200 rounded-xl p-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-teal-900">운영비용 (OE)</span>
+                            <span class="px-2.5 py-0.5 bg-teal-600 text-white text-xs font-bold rounded-full">절감
+                                ↓</span>
+                        </div>
+                        <p class="text-sm text-teal-900/90 leading-relaxed">
+                            각종 인건비나 활동비를 절감하면 <strong>OE가 줄어듭니다.</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 결론 요약 박스 -->
+                <div class="bg-gray-900 text-white rounded-xl p-6 leading-relaxed">
+                    <p class="text-base sm:text-lg">
+                        <strong>T, I, OE는 기업의 수익성 향상과 밀접한 관계가 있습니다.</strong><br>
+                        <span class="text-gray-300 text-sm sm:text-base mt-2 block">
+                            쓰루풋(T)과 재고(I)가 변동 없을 때 운영비용(OE)이 줄면 <strong class="text-blue-400">순이익(Net Profit)</strong>과
+                            <strong class="text-blue-400">투자수익률(ROI)</strong>은 좋아집니다.
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- 4. 공통 푸터 (공통 표준 규격 푸터) -->
+    <footer class="bg-gray-900 text-gray-400 py-6 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div class="space-y-1 text-sm flex-grow">
+                <p class="text-white font-bold mb-3">사단법인 한국티오시협회</p>
+                <p>주소: 서울 서초구 강남대로 309 (코리아비지니스센타) 1814호</p>
+                <p>전화: 02-312-8504</p>
+                <p>대표메일: tockorea@tockorea.org <span class="hidden sm:inline mx-2">|</span><br class="sm:hidden"> 아카데미: academy@tockorea.org</p>
+            </div>
+            <div class="text-sm text-gray-500 whitespace-nowrap">
+                &copy; 2026 TOC Korea. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

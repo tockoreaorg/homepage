@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News 관리자 - 한국TOC협회</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        /* 데스크톱 환경 메뉴 호버 및 포커스 드롭다운 구현 */
+        .group:hover .dropdown-menu,
+        .group:focus-within .dropdown-menu {
+            display: block;
+        }
+
+        /* Quill 에디터 커스텀 스타일 */
+        .ql-toolbar.ql-snow {
+            border-color: #d1d5db;
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+            background-color: #f9fafb;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        .ql-container.ql-snow {
+            border-color: #d1d5db;
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.9375rem;
+        }
+
+        .ql-editor {
+            min-height: 220px;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen overflow-x-clip">
+
+    <!-- 1. GNB (PC + 모바일 반응형 최종 통합 헤더) -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- 로고 -->
+                <div class="flex-shrink-0">
+                    <a href="index.html"
+                        class="text-xl md:text-2xl font-extrabold text-blue-700 tracking-tight">한국TOC협회</a>
+                </div>
+
+                <!-- 데스크톱 메뉴 (PC) -->
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <!-- WHAT IS TOC? -->
+                    <div class="relative group py-6">
+                        <button
+                            class="text-gray-700 hover:text-blue-600 font-semibold uppercase tracking-wider text-sm flex items-center gap-1">
+                            What is TOC?
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+                        <div
+                            class="dropdown-menu hidden absolute left-0 top-full mt-0 w-52 bg-white border border-gray-100 rounded-b-lg shadow-xl py-2">
+                            <a href="what-toc.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">TOC란?</a>
+                            <a href="5fs.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">5
+                                Focusing Steps</a>
+                            <a href="dbr.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Drum-Buffer-Rope
+                                (DBR)</a>
+                            <a href="ccpm.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">CCPM</a>
+                            <a href="ta.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Throughput
+                                Accounting</a>
+                            <a href="tp.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Thinking
+                                Process</a>
+                            <a href="mta.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">MTA</a>
+                        </div>
+                    </div>
+
+                    <a href="education.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Education</a>
+                    <a href="certification.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Certification</a>
+                    <a href="membership.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Membership</a>
+                    <a href="news.html"
+                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">News</a>
+
+                    <!-- ABOUT US -->
+                    <div class="relative group py-6">
+                        <button
+                            class="text-gray-700 hover:text-blue-600 font-semibold uppercase tracking-wider text-sm flex items-center gap-1">
+                            About Us
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+                        <div
+                            class="dropdown-menu hidden absolute right-0 top-full mt-0 w-48 bg-white border border-gray-100 rounded-b-lg shadow-xl py-2">
+                            <a href="about.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">협회 소개
+                                및
+                                인사말</a>
+                            <a href="history.html"
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">협회
+                                연혁</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- 모바일 햄버거 버튼 (스마트폰 전용) -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu()"
+                        class="text-gray-700 hover:text-blue-600 focus:outline-none p-2 rounded-lg"
+                        aria-label="메뉴 열기" aria-expanded="false">
+                        <svg id="icon-menu-open" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="icon-menu-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 모바일 펼침 메뉴 (버튼 클릭 시 열림) -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div class="px-4 pt-2 pb-5 space-y-1">
+                <!-- WHAT IS TOC? 아코디언 -->
+                <div>
+                    <button type="button" onclick="toggleMobileSubmenu('mobile-submenu-toc', 'icon-toc')"
+                        class="w-full flex justify-between items-center px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">
+                        <span>WHAT IS TOC?</span>
+                        <svg id="icon-toc" class="w-5 h-5 transition-transform duration-200" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="mobile-submenu-toc" class="hidden pl-4 pr-2 py-1 space-y-1 bg-gray-50 rounded-lg mt-1">
+                        <a href="what-toc.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· TOC란?</a>
+                        <a href="5fs.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· 5
+                            Focusing Steps</a>
+                        <a href="dbr.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Drum-Buffer-Rope (DBR)</a>
+                        <a href="ccpm.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            CCPM</a>
+                        <a href="ta.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Throughput Accounting</a>
+                        <a href="tp.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            Thinking Process</a>
+                        <a href="mta.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            MTA</a>
+                    </div>
+                </div>
+
+                <a href="education.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">EDUCATION</a>
+                <a href="certification.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">CERTIFICATION</a>
+                <a href="membership.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">MEMBERSHIP</a>
+                <a href="news.html"
+                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">NEWS</a>
+
+                <!-- ABOUT US 아코디언 -->
+                <div>
+                    <button type="button" onclick="toggleMobileSubmenu('mobile-submenu-about', 'icon-about')"
+                        class="w-full flex justify-between items-center px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">
+                        <span>ABOUT US</span>
+                        <svg id="icon-about" class="w-5 h-5 transition-transform duration-200" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="mobile-submenu-about" class="hidden pl-4 pr-2 py-1 space-y-1 bg-gray-50 rounded-lg mt-1">
+                        <a href="about.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">·
+                            협회 소개 및 인사말</a>
+                        <a href="history.html"
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· 협회 연혁</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        function toggleMobileMenu(forceClose) {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            const openIcon = document.getElementById('icon-menu-open');
+            const closeIcon = document.getElementById('icon-menu-close');
+            if (!menu) return;
+
+            const isHidden = forceClose === true ? true : menu.classList.toggle('hidden');
+            if (forceClose === true) menu.classList.add('hidden');
+            if (btn) {
+                btn.setAttribute('aria-expanded', String(!isHidden));
+                btn.setAttribute('aria-label', isHidden ? '메뉴 열기' : '메뉴 닫기');
+            }
+            if (openIcon) openIcon.classList.toggle('hidden', !isHidden);
+            if (closeIcon) closeIcon.classList.toggle('hidden', isHidden);
+        }
+
+        function toggleMobileSubmenu(menuId, iconId) {
+            const targetMenu = document.getElementById(menuId || 'mobile-submenu');
+            const targetIcon = document.getElementById(iconId || 'mobile-submenu-icon');
+            if (targetMenu) targetMenu.classList.toggle('hidden');
+            if (targetIcon) targetIcon.classList.toggle('rotate-180');
+        }
+
+        (function initHeaderNavigation() {
+            const header = document.querySelector('header');
+            if (!header) return;
+
+            header.querySelectorAll('a[href="news.html"]').forEach((link) => {
+                link.classList.remove('text-gray-700', 'text-gray-800');
+                link.classList.add('text-blue-600', 'font-bold');
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768) toggleMobileMenu(true);
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') toggleMobileMenu(true);
+            });
+        })();
+    </script>
+
+    <!-- 2. 타이틀 배너 -->
+    <div class="bg-blue-600 text-white py-10 sm:py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <p class="text-blue-200 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-1">ADMINISTRATION</p>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">News & Notice 관리자</h1>
+                <p class="mt-2 text-blue-100 text-sm sm:text-base">
+                    공지사항 및 세미나 소식을 작성, 수정, 삭제할 수 있습니다.
+                </p>
+            </div>
+            <a href="news.html"
+                class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white/15 hover:bg-white/25 border border-white/30 rounded-xl text-sm font-semibold text-white transition whitespace-nowrap self-start sm:self-center">
+                <span>공개 게시판 보기</span>
+                <span aria-hidden="true">&rarr;</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- 3. 메인 콘텐츠 -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 w-full break-keep">
+
+        <!-- 초기 세션 확인 중 -->
+        <div id="loading-section" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-12 text-center text-gray-500">
+            로그인 상태를 확인하는 중입니다...
+        </div>
+
+        <!-- 3-1. 관리자 로그인 섹션 -->
+        <section id="auth-section" class="hidden max-w-md mx-auto">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
+                <div class="mb-6">
+                    <span
+                        class="inline-block bg-blue-50 text-blue-700 text-xs font-bold px-2.5 py-1 rounded-md mb-2">ADMIN LOGIN</span>
+                    <h2 class="text-2xl font-bold text-gray-900">관리자 로그인</h2>
+                    <p class="text-sm text-gray-600 mt-1">Supabase Auth에 등록된 관리자 계정으로 로그인하세요.</p>
+                </div>
+
+                <div id="auth-error"
+                    class="hidden mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"></div>
+
+                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label for="login-email" class="block text-sm font-semibold text-gray-700 mb-1.5">이메일</label>
+                        <input type="email" id="login-email" required autocomplete="email"
+                            placeholder="admin@tockorea.org"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="login-password" class="block text-sm font-semibold text-gray-700 mb-1.5">비밀번호</label>
+                        <input type="password" id="login-password" required autocomplete="current-password"
+                            placeholder="비밀번호 입력"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <button id="login-submit-btn" type="submit"
+                        class="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-bold rounded-xl text-sm transition shadow-sm">
+                        로그인
+                    </button>
+                </form>
+
+                <p class="mt-5 pt-4 border-t border-gray-100 text-xs text-gray-500 leading-relaxed">
+                    ※ 관리자 계정은 Supabase 대시보드 &gt; Authentication &gt; Users에서 생성할 수 있습니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 3-2. 관리자 대시보드 (로그인 후 표시) -->
+        <section id="admin-section" class="hidden space-y-6">
+
+            <!-- 상단 관리자 상태 바 -->
+            <div
+                class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0"></span>
+                    <div class="text-sm text-gray-700 truncate">
+                        로그인 계정: <strong id="admin-email" class="text-gray-900"></strong>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+                    <button type="button" onclick="openEditorModal()"
+                        class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm transition shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        <span>새 게시물 작성</span>
+                    </button>
+                    <button type="button" onclick="handleLogout()"
+                        class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-sm transition">
+                        로그아웃
+                    </button>
+                </div>
+            </div>
+
+            <!-- 오류 안내 배너 -->
+            <div id="admin-error-banner"
+                class="hidden rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800"></div>
+
+            <!-- 검색 및 개수 요약 -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="text-base text-gray-700 font-medium">
+                    전체 게시물 <span id="admin-post-count" class="font-bold text-blue-600">0</span>건
+                </div>
+                <div class="relative w-full sm:w-72">
+                    <input type="text" id="admin-search-input" oninput="filterAdminPosts()" placeholder="제목 또는 내용 검색..."
+                        class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 데스크톱 테이블 (md 이상) -->
+            <div class="hidden md:block bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-5 py-3.5 text-center font-bold text-gray-700 w-20">번호</th>
+                                <th class="px-5 py-3.5 text-left font-bold text-gray-700">제목</th>
+                                <th class="px-5 py-3.5 text-center font-bold text-gray-700 w-32">일자</th>
+                                <th class="px-5 py-3.5 text-center font-bold text-gray-700 w-44">관리</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-tbody" class="divide-y divide-gray-200 bg-white">
+                            <tr>
+                                <td colspan="4" class="px-6 py-12 text-center text-gray-500">게시물을 불러오는 중입니다...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 모바일 카드 리스트 (md 미만) -->
+            <div id="admin-mobile-list" class="md:hidden space-y-3"></div>
+        </section>
+
+    </main>
+
+    <!-- 4. 작성/수정 모달 -->
+    <div id="editor-modal"
+        class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+        onclick="if (event.target === this) closeEditorModal()">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[92vh] flex flex-col overflow-hidden"
+            onclick="event.stopPropagation()">
+            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                <h3 id="editor-modal-title" class="text-lg sm:text-xl font-bold text-gray-900">새 게시물 작성</h3>
+                <button type="button" onclick="closeEditorModal()"
+                    class="text-gray-400 hover:text-gray-700 p-1.5 rounded-lg hover:bg-gray-200/70 transition"
+                    aria-label="닫기">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="editor-form" onsubmit="handleSavePost(event)" class="flex flex-col flex-grow overflow-hidden">
+                <div class="p-6 overflow-y-auto space-y-4 text-sm">
+                    <div id="editor-error"
+                        class="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"></div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="post-no" class="block font-semibold text-gray-700 mb-1.5">게시물 번호 (선택)</label>
+                            <input type="number" id="post-no" min="1" placeholder="비워두면 자동 번호"
+                                class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label for="post-date" class="block font-semibold text-gray-700 mb-1.5">게시 일자</label>
+                            <input type="date" id="post-date" required
+                                class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="post-title" class="block font-semibold text-gray-700 mb-1.5">제목 <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="post-title" required placeholder="게시물 제목을 입력하세요"
+                            class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1.5">내용 <span
+                                class="text-red-500">*</span></label>
+                        <div id="post-content-editor" class="bg-white"></div>
+                    </div>
+
+                    <div class="pt-2 border-t border-gray-100 space-y-4">
+                        <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">첨부 미디어 및 링크 (선택)</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="post-image-url" class="block font-semibold text-gray-700 mb-1.5">이미지 URL</label>
+                                <input type="url" id="post-image-url" placeholder="https://... (구글 드라이브 링크 지원)"
+                                    class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="post-video-url" class="block font-semibold text-gray-700 mb-1.5">유튜브 URL</label>
+                                <input type="url" id="post-video-url" placeholder="https://youtu.be/..."
+                                    class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="post-doc-url" class="block font-semibold text-gray-700 mb-1.5">첨부문서 URL</label>
+                                <input type="url" id="post-doc-url" placeholder="https://..."
+                                    class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="post-doc-name" class="block font-semibold text-gray-700 mb-1.5">첨부문서 버튼명</label>
+                                <input type="text" id="post-doc-name" placeholder="예: 안내문 PDF 보기"
+                                    class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="post-link-url" class="block font-semibold text-gray-700 mb-1.5">관련 링크 URL</label>
+                                <input type="text" id="post-link-url" placeholder="https://... 또는 education.html"
+                                    class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="post-link-name" class="block font-semibold text-gray-700 mb-1.5">관련 링크 버튼명</label>
+                                <input type="text" id="post-link-name" placeholder="예: 교육 일정 바로가기"
+                                    class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-2.5">
+                    <button type="button" onclick="closeEditorModal()"
+                        class="px-5 py-2.5 bg-white border border-gray-300 text-gray-700 font-semibold rounded-xl text-sm hover:bg-gray-100 transition">
+                        취소
+                    </button>
+                    <button id="editor-save-btn" type="submit"
+                        class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-bold rounded-xl text-sm transition shadow-sm">
+                        저장하기
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 5. 삭제 확인 모달 -->
+    <div id="delete-modal"
+        class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+        onclick="if (event.target === this) closeDeleteModal()">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6" onclick="event.stopPropagation()">
+            <h3 class="text-lg font-bold text-gray-900 mb-2">게시물 삭제</h3>
+            <p class="text-sm text-gray-600 mb-1">아래 게시물을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.</p>
+            <p id="delete-target-title"
+                class="text-sm font-bold text-gray-900 bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 my-4 break-keep">
+            </p>
+            <div class="flex justify-end gap-2.5">
+                <button type="button" onclick="closeDeleteModal()"
+                    class="px-4 py-2.5 bg-white border border-gray-300 text-gray-700 font-semibold rounded-xl text-sm hover:bg-gray-100 transition">
+                    취소
+                </button>
+                <button id="delete-confirm-btn" type="button" onclick="confirmDeletePost()"
+                    class="px-5 py-2.5 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white font-bold rounded-xl text-sm transition">
+                    삭제하기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 토스트 알림 -->
+    <div id="toast-message" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] hidden">
+        <div
+            class="bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-gray-700 flex items-center gap-2.5 text-sm font-medium whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0"></span>
+            <span id="toast-text">처리되었습니다.</span>
+        </div>
+    </div>
+
+    <!-- 6. Footer (공통 표준 규격 푸터) -->
+    <footer class="bg-gray-900 text-gray-400 py-6 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div class="space-y-1 text-sm flex-grow">
+                <p class="text-white font-bold mb-3">사단법인 한국티오시협회</p>
+                <p>주소: 서울 서초구 강남대로 309 (코리아비지니스센타) 1814호</p>
+                <p>전화: 02-312-8504</p>
+                <p>대표메일: tockorea@tockorea.org <span class="hidden sm:inline mx-2">|</span><br class="sm:hidden"> 아카데미: academy@tockorea.org</p>
+            </div>
+            <div class="text-sm text-gray-500 whitespace-nowrap">
+                &copy; 2026 TOC Korea. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- 7. Supabase Auth & CRUD 스크립트 -->
+    <script>
+        const SUPABASE_URL = 'https://buzqfxcouwfwownbxyxh.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_miB772zis3F0QGdYxnzuHQ_OU78WPV0';
+        const SUPABASE_TABLE = 'news';
+
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let allPosts = [];
+        let filteredPosts = [];
+        let editingPostId = null;
+        let deletingPostId = null;
+        let toastTimer = null;
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function formatDateText(value) {
+            if (!value) return '';
+            const str = String(value).trim();
+            const isoMatch = str.match(/^(\d{4}-\d{2}-\d{2})/);
+            return isoMatch ? isoMatch[1] : str;
+        }
+
+        function getTodayDateString() {
+            const now = new Date();
+            const offsetMs = now.getTimezoneOffset() * 60 * 1000;
+            return new Date(now.getTime() - offsetMs).toISOString().slice(0, 10);
+        }
+
+        function showToast(message) {
+            const toastEl = document.getElementById('toast-message');
+            const toastText = document.getElementById('toast-text');
+            toastText.innerText = message;
+            toastEl.classList.remove('hidden');
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toastEl.classList.add('hidden'), 3000);
+        }
+
+        function setViewState(user) {
+            document.getElementById('loading-section').classList.add('hidden');
+            const authEl = document.getElementById('auth-section');
+            const adminEl = document.getElementById('admin-section');
+
+            if (user) {
+                authEl.classList.add('hidden');
+                adminEl.classList.remove('hidden');
+                document.getElementById('admin-email').innerText = user.email || '관리자';
+                loadAdminPosts();
+            } else {
+                adminEl.classList.add('hidden');
+                authEl.classList.remove('hidden');
+            }
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const errorBox = document.getElementById('auth-error');
+            const submitBtn = document.getElementById('login-submit-btn');
+
+            errorBox.classList.add('hidden');
+            submitBtn.disabled = true;
+            submitBtn.innerText = '로그인 중...';
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                showToast('관리자 로그인에 성공했습니다.');
+                setViewState(data.user);
+            } catch (err) {
+                errorBox.innerText = `로그인 실패: ${err.message}`;
+                errorBox.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = '로그인';
+            }
+        }
+
+        async function handleLogout() {
+            await supabaseClient.auth.signOut();
+            allPosts = [];
+            filteredPosts = [];
+            showToast('로그아웃되었습니다.');
+            setViewState(null);
+        }
+
+        function normalizePost(row) {
+            return {
+                id: row.id,
+                no: row.no ?? row.id,
+                title: String(row.title ?? '').trim(),
+                date: formatDateText(row.date ?? row.created_at ?? ''),
+                content: String(row.content ?? ''),
+                image_url: String(row.image_url ?? '').trim(),
+                video_url: String(row.video_url ?? '').trim(),
+                doc_url: String(row.doc_url ?? '').trim(),
+                doc_name: String(row.doc_name ?? '').trim(),
+                link_url: String(row.link_url ?? '').trim(),
+                link_name: String(row.link_name ?? '').trim()
+            };
+        }
+
+        async function loadAdminPosts() {
+            const errorBanner = document.getElementById('admin-error-banner');
+            errorBanner.classList.add('hidden');
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from(SUPABASE_TABLE)
+                    .select('*');
+
+                if (error) throw error;
+
+                const normalized = (data || []).map(normalizePost);
+                normalized.sort((a, b) => {
+                    const noA = Number(a.no);
+                    const noB = Number(b.no);
+                    if (Number.isFinite(noA) && Number.isFinite(noB) && noA !== noB) {
+                        return noB - noA;
+                    }
+                    const dateCmp = String(b.date).localeCompare(String(a.date));
+                    if (dateCmp !== 0) return dateCmp;
+                    return String(b.id).localeCompare(String(a.id), undefined, { numeric: true });
+                });
+
+                allPosts = normalized;
+                filterAdminPosts();
+            } catch (err) {
+                console.error('게시물 조회 오류:', err);
+                errorBanner.innerText = `게시물을 불러오지 못했습니다: ${err.message}`;
+                errorBanner.classList.remove('hidden');
+            }
+        }
+
+        function stripHtml(html) {
+            const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
+            return doc.body.textContent || '';
+        }
+
+        function filterAdminPosts() {
+            const keyword = document.getElementById('admin-search-input').value.toLowerCase().trim();
+            filteredPosts = allPosts.filter(p =>
+                p.title.toLowerCase().includes(keyword) ||
+                stripHtml(p.content).toLowerCase().includes(keyword)
+            );
+            renderAdminPosts(filteredPosts);
+        }
+
+        function buildAttachmentBadges(post) {
+            let badges = '';
+            if (post.image_url) badges += '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700">이미지</span>';
+            if (post.video_url) badges += '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-50 text-red-700">동영상</span>';
+            if (post.doc_url) badges += '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700">문서</span>';
+            if (post.link_url) badges += '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700">링크</span>';
+            return badges ? `<div class="flex flex-wrap gap-1 mt-1">${badges}</div>` : '';
+        }
+
+        function renderAdminPosts(posts) {
+            document.getElementById('admin-post-count').innerText = posts.length;
+            const tbody = document.getElementById('admin-tbody');
+            const mobileList = document.getElementById('admin-mobile-list');
+
+            if (!posts.length) {
+                tbody.innerHTML = '<tr><td colspan="4" class="px-6 py-12 text-center text-gray-500">등록된 게시물이 없습니다. "새 게시물 작성" 버튼을 눌러 등록해 보세요.</td></tr>';
+                mobileList.innerHTML = '<div class="bg-white rounded-2xl border border-gray-200 p-8 text-center text-sm text-gray-500">등록된 게시물이 없습니다.</div>';
+                return;
+            }
+
+            tbody.innerHTML = posts.map(post => {
+                const safeId = escapeHtml(String(post.id));
+                return `
+                <tr class="hover:bg-gray-50/80 transition">
+                    <td class="px-5 py-4 text-center text-gray-600 font-medium whitespace-nowrap">${escapeHtml(post.no)}</td>
+                    <td class="px-5 py-4">
+                        <div class="font-semibold text-gray-900">${escapeHtml(post.title)}</div>
+                        ${buildAttachmentBadges(post)}
+                    </td>
+                    <td class="px-5 py-4 text-center text-gray-500 whitespace-nowrap">${escapeHtml(post.date)}</td>
+                    <td class="px-5 py-4 text-center whitespace-nowrap">
+                        <div class="inline-flex items-center gap-1.5">
+                            <button type="button" onclick="openEditorModal('${safeId}')"
+                                class="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-lg text-xs transition">
+                                수정
+                            </button>
+                            <button type="button" onclick="openDeleteModal('${safeId}')"
+                                class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-lg text-xs transition">
+                                삭제
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            }).join('');
+
+            mobileList.innerHTML = posts.map(post => {
+                const safeId = escapeHtml(String(post.id));
+                return `
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 space-y-3">
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                        <span class="font-bold text-blue-600">No. ${escapeHtml(post.no)}</span>
+                        <span>${escapeHtml(post.date)}</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 text-base leading-snug">${escapeHtml(post.title)}</h3>
+                        ${buildAttachmentBadges(post)}
+                    </div>
+                    <div class="flex gap-2 pt-2 border-t border-gray-100">
+                        <button type="button" onclick="openEditorModal('${safeId}')"
+                            class="flex-1 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-xl text-xs transition">
+                            수정
+                        </button>
+                        <button type="button" onclick="openDeleteModal('${safeId}')"
+                            class="flex-1 py-2 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-xl text-xs transition">
+                            삭제
+                        </button>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        let quillEditor = null;
+
+        function ensureQuillEditor() {
+            if (quillEditor) return quillEditor;
+            quillEditor = new Quill('#post-content-editor', {
+                theme: 'snow',
+                placeholder: '게시물 본문 내용을 입력하세요',
+                modules: {
+                    toolbar: [
+                        [{ header: [2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ color: [] }, { background: [] }],
+                        [{ list: 'ordered' }, { list: 'bullet' }],
+                        [{ align: [] }],
+                        ['blockquote', 'link', 'clean']
+                    ]
+                }
+            });
+            return quillEditor;
+        }
+
+        function setQuillContent(value) {
+            const editor = ensureQuillEditor();
+            const raw = String(value || '');
+            editor.setText('');
+            if (!raw.trim()) return;
+            if (/<[a-z][\s\S]*>/i.test(raw)) {
+                editor.clipboard.dangerouslyPasteHTML(raw);
+            } else {
+                editor.setText(raw);
+            }
+        }
+
+        function getQuillHtml() {
+            const editor = ensureQuillEditor();
+            if (typeof editor.getSemanticHTML === 'function') {
+                return editor.getSemanticHTML();
+            }
+            return editor.root.innerHTML;
+        }
+
+        function openEditorModal(postId = null) {
+            const form = document.getElementById('editor-form');
+            const errorBox = document.getElementById('editor-error');
+            form.reset();
+            errorBox.classList.add('hidden');
+            ensureQuillEditor();
+
+            if (postId !== null) {
+                const post = allPosts.find(p => String(p.id) === String(postId));
+                if (!post) return;
+                editingPostId = post.id;
+                document.getElementById('editor-modal-title').innerText = '게시물 수정';
+                document.getElementById('post-no').value = post.no ?? '';
+                document.getElementById('post-date').value = post.date || getTodayDateString();
+                document.getElementById('post-title').value = post.title;
+                setQuillContent(post.content);
+                document.getElementById('post-image-url').value = post.image_url;
+                document.getElementById('post-video-url').value = post.video_url;
+                document.getElementById('post-doc-url').value = post.doc_url;
+                document.getElementById('post-doc-name').value = post.doc_name;
+                document.getElementById('post-link-url').value = post.link_url;
+                document.getElementById('post-link-name').value = post.link_name;
+            } else {
+                editingPostId = null;
+                document.getElementById('editor-modal-title').innerText = '새 게시물 작성';
+                const maxNo = allPosts.reduce((max, p) => {
+                    const n = Number(p.no);
+                    return Number.isFinite(n) && n > max ? n : max;
+                }, 0);
+                document.getElementById('post-no').value = maxNo + 1;
+                document.getElementById('post-date').value = getTodayDateString();
+                setQuillContent('');
+            }
+
+            document.getElementById('editor-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEditorModal() {
+            document.getElementById('editor-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+            editingPostId = null;
+        }
+
+        async function handleSavePost(e) {
+            e.preventDefault();
+            const errorBox = document.getElementById('editor-error');
+            const saveBtn = document.getElementById('editor-save-btn');
+            errorBox.classList.add('hidden');
+
+            const editor = ensureQuillEditor();
+            if (!editor.getText().trim()) {
+                errorBox.innerText = '내용을 입력해 주세요.';
+                errorBox.classList.remove('hidden');
+                editor.focus();
+                return;
+            }
+
+            const rawNo = document.getElementById('post-no').value.trim();
+            const payload = {
+                no: rawNo ? Number(rawNo) : null,
+                date: document.getElementById('post-date').value,
+                title: document.getElementById('post-title').value.trim(),
+                content: getQuillHtml(),
+                image_url: document.getElementById('post-image-url').value.trim(),
+                video_url: document.getElementById('post-video-url').value.trim(),
+                doc_url: document.getElementById('post-doc-url').value.trim(),
+                doc_name: document.getElementById('post-doc-name').value.trim(),
+                link_url: document.getElementById('post-link-url').value.trim(),
+                link_name: document.getElementById('post-link-name').value.trim()
+            };
+
+            saveBtn.disabled = true;
+            saveBtn.innerText = '저장 중...';
+
+            try {
+                if (editingPostId !== null) {
+                    const { error } = await supabaseClient
+                        .from(SUPABASE_TABLE)
+                        .update(payload)
+                        .eq('id', editingPostId);
+                    if (error) throw error;
+                    showToast('게시물이 수정되었습니다.');
+                } else {
+                    const { error } = await supabaseClient
+                        .from(SUPABASE_TABLE)
+                        .insert([payload]);
+                    if (error) throw error;
+                    showToast('새 게시물이 등록되었습니다.');
+                }
+
+                closeEditorModal();
+                await loadAdminPosts();
+            } catch (err) {
+                errorBox.innerText = `저장 실패: ${err.message}`;
+                errorBox.classList.remove('hidden');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerText = '저장하기';
+            }
+        }
+
+        function openDeleteModal(postId) {
+            const post = allPosts.find(p => String(p.id) === String(postId));
+            if (!post) return;
+            deletingPostId = post.id;
+            document.getElementById('delete-target-title').innerText = `[No. ${post.no}] ${post.title}`;
+            document.getElementById('delete-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('delete-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+            deletingPostId = null;
+        }
+
+        async function confirmDeletePost() {
+            if (deletingPostId === null) return;
+            const btn = document.getElementById('delete-confirm-btn');
+            btn.disabled = true;
+            btn.innerText = '삭제 중...';
+
+            try {
+                const { error } = await supabaseClient
+                    .from(SUPABASE_TABLE)
+                    .delete()
+                    .eq('id', deletingPostId);
+                if (error) throw error;
+
+                closeDeleteModal();
+                showToast('게시물이 삭제되었습니다.');
+                await loadAdminPosts();
+            } catch (err) {
+                closeDeleteModal();
+                const errorBanner = document.getElementById('admin-error-banner');
+                errorBanner.innerText = `삭제 실패: ${err.message}`;
+                errorBanner.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = '삭제하기';
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeEditorModal();
+                closeDeleteModal();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                setViewState(session?.user || null);
+            } catch (err) {
+                document.getElementById('loading-section').innerText = `초기화 오류: ${err.message}`;
+            }
+        });
+    </script>
+</body>
+
+</html>
