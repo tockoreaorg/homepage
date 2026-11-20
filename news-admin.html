@@ -380,7 +380,7 @@
                                 <th class="px-5 py-3.5 text-center font-bold text-gray-700 w-20">번호</th>
                                 <th class="px-5 py-3.5 text-left font-bold text-gray-700">제목</th>
                                 <th class="px-5 py-3.5 text-center font-bold text-gray-700 w-32">일자</th>
-                                <th class="px-5 py-3.5 text-center font-bold text-gray-700 w-44">관리</th>
+                                <th class="px-5 py-3.5 text-center font-bold text-gray-700 w-56">관리</th>
                             </tr>
                         </thead>
                         <tbody id="admin-tbody" class="divide-y divide-gray-200 bg-white">
@@ -440,6 +440,13 @@
                         <input type="text" id="post-title" required placeholder="게시물 제목을 입력하세요"
                             class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
+
+                    <label
+                        class="flex items-center gap-2.5 px-3.5 py-2.5 bg-blue-50/70 border border-blue-200 rounded-xl cursor-pointer select-none">
+                        <input type="checkbox" id="post-is-pinned"
+                            class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                        <span class="text-sm font-semibold text-blue-900">상단 고정 (공지글로 목록 맨 위에 고정 표시)</span>
+                    </label>
 
                     <div>
                         <label class="block font-semibold text-gray-700 mb-1.5">내용 <span
@@ -647,10 +654,13 @@
             setViewState(null);
         }
 
+        let hasPinnedColumn = false;
+
         function normalizePost(row) {
             return {
                 id: row.id,
                 no: row.no ?? row.id,
+                is_pinned: Boolean(row.is_pinned ?? row.isPinned ?? false),
                 title: String(row.title ?? '').trim(),
                 date: formatDateText(row.date ?? row.created_at ?? ''),
                 content: String(row.content ?? ''),
@@ -674,8 +684,13 @@
 
                 if (error) throw error;
 
+                if (Array.isArray(data) && data.length > 0) {
+                    hasPinnedColumn = Object.prototype.hasOwnProperty.call(data[0], 'is_pinned');
+                }
+
                 const normalized = (data || []).map(normalizePost);
                 normalized.sort((a, b) => {
+                    if (a.is_pinned !== b.is_pinned) return a.is_pinned ? -1 : 1;
                     const noA = Number(a.no);
                     const noB = Number(b.no);
                     if (Number.isFinite(noA) && Number.isFinite(noB) && noA !== noB) {
@@ -731,16 +746,29 @@
 
             tbody.innerHTML = posts.map(post => {
                 const safeId = escapeHtml(String(post.id));
+                const rowBg = post.is_pinned ? 'bg-blue-50/40 hover:bg-blue-50/70' : 'hover:bg-gray-50/80';
+                const pinBadge = post.is_pinned
+                    ? '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-blue-600 text-white mr-1.5">공지</span>'
+                    : '';
+                const pinBtnLabel = post.is_pinned ? '고정해제' : '상단고정';
+                const pinBtnClass = post.is_pinned
+                    ? 'bg-amber-50 hover:bg-amber-100 text-amber-700'
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700';
+
                 return `
-                <tr class="hover:bg-gray-50/80 transition">
+                <tr class="${rowBg} transition">
                     <td class="px-5 py-4 text-center text-gray-600 font-medium whitespace-nowrap">${escapeHtml(post.no)}</td>
                     <td class="px-5 py-4">
-                        <div class="font-semibold text-gray-900">${escapeHtml(post.title)}</div>
+                        <div class="font-semibold text-gray-900">${pinBadge}${escapeHtml(post.title)}</div>
                         ${buildAttachmentBadges(post)}
                     </td>
                     <td class="px-5 py-4 text-center text-gray-500 whitespace-nowrap">${escapeHtml(post.date)}</td>
                     <td class="px-5 py-4 text-center whitespace-nowrap">
                         <div class="inline-flex items-center gap-1.5">
+                            <button type="button" onclick="togglePinPost('${safeId}', ${!post.is_pinned})"
+                                class="px-3 py-1.5 ${pinBtnClass} font-semibold rounded-lg text-xs transition">
+                                ${pinBtnLabel}
+                            </button>
                             <button type="button" onclick="openEditorModal('${safeId}')"
                                 class="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-lg text-xs transition">
                                 수정
@@ -757,10 +785,19 @@
 
             mobileList.innerHTML = posts.map(post => {
                 const safeId = escapeHtml(String(post.id));
+                const cardBorder = post.is_pinned ? 'border-blue-300 bg-blue-50/30' : 'border-gray-200 bg-white';
+                const pinBadge = post.is_pinned
+                    ? '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-blue-600 text-white mr-1.5">공지</span>'
+                    : '';
+                const pinBtnLabel = post.is_pinned ? '고정해제' : '상단고정';
+                const pinBtnClass = post.is_pinned
+                    ? 'bg-amber-50 hover:bg-amber-100 text-amber-700'
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700';
+
                 return `
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 space-y-3">
+                <div class="rounded-2xl shadow-sm border ${cardBorder} p-4 space-y-3">
                     <div class="flex items-center justify-between text-xs text-gray-500">
-                        <span class="font-bold text-blue-600">No. ${escapeHtml(post.no)}</span>
+                        <span class="font-bold text-blue-600">${pinBadge}No. ${escapeHtml(post.no)}</span>
                         <span>${escapeHtml(post.date)}</span>
                     </div>
                     <div>
@@ -768,6 +805,10 @@
                         ${buildAttachmentBadges(post)}
                     </div>
                     <div class="flex gap-2 pt-2 border-t border-gray-100">
+                        <button type="button" onclick="togglePinPost('${safeId}', ${!post.is_pinned})"
+                            class="flex-1 py-2 ${pinBtnClass} font-semibold rounded-xl text-xs transition">
+                            ${pinBtnLabel}
+                        </button>
                         <button type="button" onclick="openEditorModal('${safeId}')"
                             class="flex-1 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-xl text-xs transition">
                             수정
@@ -838,6 +879,7 @@
                 document.getElementById('post-no').value = post.no ?? '';
                 document.getElementById('post-date').value = post.date || getTodayDateString();
                 document.getElementById('post-title').value = post.title;
+                document.getElementById('post-is-pinned').checked = Boolean(post.is_pinned);
                 setQuillContent(post.content);
                 document.getElementById('post-image-url').value = post.image_url;
                 document.getElementById('post-video-url').value = post.video_url;
@@ -854,6 +896,7 @@
                 }, 0);
                 document.getElementById('post-no').value = maxNo + 1;
                 document.getElementById('post-date').value = getTodayDateString();
+                document.getElementById('post-is-pinned').checked = false;
                 setQuillContent('');
             }
 
@@ -882,6 +925,7 @@
             }
 
             const rawNo = document.getElementById('post-no').value.trim();
+            const isPinned = document.getElementById('post-is-pinned').checked;
             const payload = {
                 no: rawNo ? Number(rawNo) : null,
                 date: document.getElementById('post-date').value,
@@ -894,6 +938,9 @@
                 link_url: document.getElementById('post-link-url').value.trim(),
                 link_name: document.getElementById('post-link-name').value.trim()
             };
+            if (hasPinnedColumn || isPinned) {
+                payload.is_pinned = isPinned;
+            }
 
             saveBtn.disabled = true;
             saveBtn.innerText = '저장 중...';
@@ -917,11 +964,35 @@
                 closeEditorModal();
                 await loadAdminPosts();
             } catch (err) {
-                errorBox.innerText = `저장 실패: ${err.message}`;
+                const msg = String(err.message || err);
+                errorBox.innerText = msg.includes('is_pinned')
+                    ? '저장 실패: Supabase news 테이블에 is_pinned 컬럼이 없습니다. 안내된 SQL을 먼저 실행해 주세요.'
+                    : `저장 실패: ${msg}`;
                 errorBox.classList.remove('hidden');
             } finally {
                 saveBtn.disabled = false;
                 saveBtn.innerText = '저장하기';
+            }
+        }
+
+        async function togglePinPost(postId, nextPinned) {
+            const errorBanner = document.getElementById('admin-error-banner');
+            errorBanner.classList.add('hidden');
+            try {
+                const { error } = await supabaseClient
+                    .from(SUPABASE_TABLE)
+                    .update({ is_pinned: nextPinned })
+                    .eq('id', postId);
+                if (error) throw error;
+                hasPinnedColumn = true;
+                showToast(nextPinned ? '상단 공지로 고정되었습니다.' : '상단 고정이 해제되었습니다.');
+                await loadAdminPosts();
+            } catch (err) {
+                const msg = String(err.message || err);
+                errorBanner.innerText = msg.includes('is_pinned')
+                    ? '상단 고정 실패: Supabase news 테이블에 is_pinned 컬럼이 없습니다. 안내된 SQL을 먼저 실행해 주세요.'
+                    : `상단 고정 변경 실패: ${msg}`;
+                errorBanner.classList.remove('hidden');
             }
         }
 

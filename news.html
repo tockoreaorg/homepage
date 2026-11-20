@@ -545,6 +545,7 @@
                 no: rawNo !== undefined && rawNo !== null && String(rawNo).trim() !== ''
                     ? (Number.isFinite(parsedNo) ? parsedNo : String(rawNo).trim())
                     : (total - index),
+                isPinned: Boolean(row.is_pinned ?? row.isPinned ?? row.pinned ?? false),
                 title: String(row.title ?? row['제목'] ?? '').trim(),
                 date: formatDateText(row.date ?? row.published_at ?? row.created_at ?? row['일자'] ?? ''),
                 content: String(row.content ?? row.body ?? row['내용'] ?? ''),
@@ -596,10 +597,16 @@
                 if (post.docUrl) badges += '<span class="ml-1.5 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700">문서</span>';
                 if (post.linkUrl) badges += '<span class="ml-1.5 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700">링크</span>';
 
+                const rowBg = post.isPinned ? 'bg-blue-50/40 hover:bg-blue-50/80' : 'hover:bg-blue-50/60';
+                const noCell = post.isPinned
+                    ? '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-600 text-white">공지</span>'
+                    : escapeHtml(post.no || (posts.length - index));
+                const titleClass = post.isPinned ? 'font-bold text-blue-900' : 'font-semibold text-gray-900';
+
                 return `
-                    <tr onclick="openPostModal(${index})" class="hover:bg-blue-50/60 cursor-pointer transition group">
-                        <td class="px-4 sm:px-6 py-4 text-center text-gray-600 font-medium whitespace-nowrap">${escapeHtml(post.no || (posts.length - index))}</td>
-                        <td class="px-4 sm:px-6 py-4 font-semibold text-gray-900 group-hover:text-blue-700 transition">
+                    <tr onclick="openPostModal(${index})" class="${rowBg} cursor-pointer transition group">
+                        <td class="px-4 sm:px-6 py-4 text-center text-gray-600 font-medium whitespace-nowrap">${noCell}</td>
+                        <td class="px-4 sm:px-6 py-4 ${titleClass} group-hover:text-blue-700 transition">
                             <span>${escapeHtml(post.title)}</span>${badges}
                         </td>
                         <td class="px-4 sm:px-6 py-4 text-center text-gray-500 text-sm whitespace-nowrap">${escapeHtml(post.date)}</td>
@@ -697,7 +704,9 @@
             const post = filteredPosts[index];
             if (!post) return;
 
-            document.getElementById('modal-no').innerText = `No. ${post.no || ''}`;
+            document.getElementById('modal-no').innerText = post.isPinned
+                ? `공지 | No. ${post.no || ''}`
+                : `No. ${post.no || ''}`;
             document.getElementById('modal-date').innerText = post.date || '';
             document.getElementById('modal-title').innerText = post.title || '';
             renderPostContent(document.getElementById('modal-content'), post.content);
@@ -815,6 +824,7 @@
 
                 const normalized = rows.map((row, idx) => normalizePost(row, idx, rows.length));
                 normalized.sort((a, b) => {
+                    if (a.isPinned !== b.isPinned) return a.isPinned ? -1 : 1;
                     const noA = Number(a.no);
                     const noB = Number(b.no);
                     if (Number.isFinite(noA) && Number.isFinite(noB) && noA !== noB) {
