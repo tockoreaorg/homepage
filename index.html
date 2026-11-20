@@ -20,6 +20,90 @@
         .group:focus-within .dropdown-menu {
             display: block;
         }
+
+        /* 공지/뉴스 모달 리치 텍스트 본문 스타일 */
+        .news-prose p {
+            margin-bottom: 0.75rem;
+        }
+
+        .news-prose p:last-child {
+            margin-bottom: 0;
+        }
+
+        .news-prose h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 1.25rem 0 0.75rem;
+            color: #111827;
+        }
+
+        .news-prose h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 1.1rem 0 0.6rem;
+            color: #111827;
+        }
+
+        .news-prose h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin: 1rem 0 0.5rem;
+            color: #111827;
+        }
+
+        .news-prose ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin: 0.75rem 0;
+        }
+
+        .news-prose ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+            margin: 0.75rem 0;
+        }
+
+        .news-prose li {
+            margin: 0.25rem 0;
+        }
+
+        .news-prose blockquote {
+            border-left: 4px solid #2563eb;
+            padding: 0.25rem 0 0.25rem 1rem;
+            margin: 0.75rem 0;
+            color: #374151;
+            background-color: #f8fafc;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .news-prose a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        .news-prose .ql-align-center {
+            text-align: center;
+        }
+
+        .news-prose .ql-align-right {
+            text-align: right;
+        }
+
+        .news-prose .ql-align-justify {
+            text-align: justify;
+        }
+
+        .news-prose .ql-indent-1 {
+            padding-left: 2rem;
+        }
+
+        .news-prose .ql-indent-2 {
+            padding-left: 4rem;
+        }
+
+        .news-prose .ql-indent-3 {
+            padding-left: 6rem;
+        }
     </style>
 </head>
 
@@ -278,8 +362,29 @@
             </div>
         </section>
 
+        <!-- 2-1. 공지 및 최신 뉴스 (상단 고정 + 최신순 최대 5건) -->
+        <section class="pt-10 pb-2 bg-gray-50 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="px-5 sm:px-6 py-4 bg-gray-50/80 border-b border-gray-200 flex items-center justify-between gap-4">
+                        <h2 class="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2.5">
+                            <span class="w-1.5 h-5 bg-blue-600 rounded-full flex-shrink-0"></span>
+                            <span>공지 및 최신 뉴스</span>
+                        </h2>
+                        <a href="news.html"
+                            class="text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline whitespace-nowrap">
+                            전체 보기 &rarr;
+                        </a>
+                    </div>
+                    <ul id="home-news-list" class="divide-y divide-gray-100">
+                        <li class="px-5 sm:px-6 py-5 text-sm text-gray-500 text-center">최신 소식을 불러오는 중입니다...</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <!-- 3. Key Features (주요 서비스 카드) -->
-        <section class="py-16 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <section class="py-12 sm:py-14 bg-gray-50 px-4 sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- 카드 1 -->
@@ -341,6 +446,368 @@
             </div>
         </div>
     </footer>
+
+    <!-- 5. 공지/뉴스 상세 보기 모달 -->
+    <div id="post-modal"
+        class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+        onclick="if (event.target === this) closePostModal()">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden"
+            onclick="event.stopPropagation()">
+            <div class="px-6 py-5 border-b border-gray-200 flex justify-between items-start gap-4 bg-gray-50/80">
+                <div>
+                    <div class="flex items-center gap-2 text-sm text-gray-500 mb-1">
+                        <span id="modal-no" class="font-bold text-blue-600">No. 1</span>
+                        <span>|</span>
+                        <span id="modal-date">2026-11-20</span>
+                    </div>
+                    <h3 id="modal-title" class="text-xl sm:text-2xl font-bold text-gray-900 leading-snug break-keep">게시물 제목</h3>
+                </div>
+                <button type="button" onclick="closePostModal()"
+                    class="text-gray-400 hover:text-gray-700 p-1.5 rounded-lg hover:bg-gray-200/70 transition flex-shrink-0"
+                    aria-label="닫기">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="p-6 sm:p-8 overflow-y-auto space-y-6 text-gray-800 text-base leading-relaxed">
+                <div id="modal-content" class="news-prose break-keep"></div>
+
+                <div id="modal-image-box" class="hidden rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
+                    <img id="modal-image" src="" alt="첨부 이미지"
+                        class="w-full h-auto max-h-[500px] object-contain mx-auto">
+                </div>
+
+                <div id="modal-video-box"
+                    class="hidden rounded-xl overflow-hidden border border-gray-200 bg-black aspect-video">
+                    <iframe id="modal-video" class="w-full h-full" src="" title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+
+                <div id="modal-attachments" class="hidden pt-4 border-t border-gray-100 flex flex-wrap gap-3">
+                    <a id="modal-doc-btn" href="#" target="_blank" rel="noopener noreferrer"
+                        class="hidden inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold rounded-xl text-sm transition">
+                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <span id="modal-doc-text">첨부문서 보기</span>
+                    </a>
+                    <a id="modal-link-btn" href="#" target="_blank" rel="noopener noreferrer"
+                        class="hidden inline-flex items-center gap-2 px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-xl text-sm transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                            </path>
+                        </svg>
+                        <span id="modal-link-text">관련 링크 바로가기</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-between items-center gap-3">
+                <a href="news.html" class="text-sm font-semibold text-blue-600 hover:underline">게시판 전체 보기 &rarr;</a>
+                <button type="button" onclick="closePostModal()"
+                    class="px-5 py-2.5 bg-gray-800 hover:bg-gray-900 text-white font-bold rounded-xl text-sm transition">
+                    닫기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. 메인 최신 뉴스 연동 스크립트 -->
+    <script>
+        const SUPABASE_URL = 'https://buzqfxcouwfwownbxyxh.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_miB772zis3F0QGdYxnzuHQ_OU78WPV0';
+        const SUPABASE_TABLE = 'news';
+
+        let homeNewsPosts = [];
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function sanitizeUrl(url) {
+            const trimmed = String(url || '').trim();
+            if (!trimmed) return '';
+            if (/^(https?:\/\/|\/|\.\/|[a-zA-Z0-9_-]+\.html([?#].*)?$)/i.test(trimmed)) {
+                return trimmed;
+            }
+            return '';
+        }
+
+        function formatDateText(value) {
+            if (!value) return '';
+            const str = String(value).trim();
+            const isoMatch = str.match(/^(\d{4}-\d{2}-\d{2})/);
+            return isoMatch ? isoMatch[1] : str;
+        }
+
+        function formatImageUrl(url) {
+            const safeUrl = sanitizeUrl(url);
+            if (!safeUrl) return '';
+            const driveMatch = safeUrl.match(/\/d\/([a-zA-Z0-9_-]+)/) || safeUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (safeUrl.includes('drive.google.com') && driveMatch) {
+                return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+            }
+            return safeUrl;
+        }
+
+        function formatYoutubeUrl(url) {
+            if (!url) return '';
+            const trimmed = String(url).trim();
+            const ytMatch = trimmed.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+            return ytMatch ? `https://www.youtube.com/embed/${ytMatch[1]}` : '';
+        }
+
+        function sanitizeRichHtml(html) {
+            const allowedTags = new Set([
+                'P', 'BR', 'STRONG', 'B', 'EM', 'I', 'U', 'S', 'DEL',
+                'H1', 'H2', 'H3', 'H4', 'UL', 'OL', 'LI',
+                'BLOCKQUOTE', 'PRE', 'CODE', 'A', 'SPAN', 'DIV', 'IMG'
+            ]);
+            const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
+
+            function cleanNode(node) {
+                Array.from(node.childNodes).forEach(child => {
+                    if (child.nodeType !== Node.ELEMENT_NODE) return;
+                    const tag = child.tagName.toUpperCase();
+                    if (!allowedTags.has(tag)) {
+                        child.remove();
+                        return;
+                    }
+
+                    Array.from(child.attributes).forEach(attr => {
+                        const name = attr.name.toLowerCase();
+                        const val = attr.value;
+                        if (name === 'class') {
+                            const safeClasses = val.split(/\s+/).filter(c => /^ql-(align|indent)-[\w-]+$/.test(c));
+                            if (safeClasses.length) child.setAttribute('class', safeClasses.join(' '));
+                            else child.removeAttribute('class');
+                        } else if (name === 'style') {
+                            const safeStyles = val.split(';')
+                                .map(s => s.trim())
+                                .filter(s => /^(color|background-color|text-align)\s*:/i.test(s));
+                            if (safeStyles.length) child.setAttribute('style', safeStyles.join('; '));
+                            else child.removeAttribute('style');
+                        } else if (tag === 'A' && name === 'href') {
+                            const safeHref = sanitizeUrl(val);
+                            if (safeHref) {
+                                child.setAttribute('href', safeHref);
+                                child.setAttribute('target', '_blank');
+                                child.setAttribute('rel', 'noopener noreferrer');
+                            } else {
+                                child.removeAttribute('href');
+                            }
+                        } else if (tag === 'IMG' && (name === 'src' || name === 'alt')) {
+                            if (name === 'src') {
+                                const safeSrc = formatImageUrl(val);
+                                if (safeSrc) child.setAttribute('src', safeSrc);
+                                else child.remove();
+                            }
+                        } else {
+                            child.removeAttribute(attr.name);
+                        }
+                    });
+
+                    cleanNode(child);
+                });
+            }
+
+            cleanNode(doc.body);
+            return doc.body.innerHTML;
+        }
+
+        function renderPostContent(targetEl, rawContent) {
+            const content = String(rawContent || '');
+            if (/<[a-z][\s\S]*>/i.test(content)) {
+                targetEl.classList.remove('whitespace-pre-line');
+                targetEl.innerHTML = sanitizeRichHtml(content);
+            } else {
+                targetEl.classList.add('whitespace-pre-line');
+                targetEl.innerText = content;
+            }
+        }
+
+        function normalizeHomePost(row, index, total) {
+            const rawNo = row.no ?? row.num ?? row.post_no ?? row['번호'] ?? row.id;
+            const parsedNo = Number(rawNo);
+            return {
+                id: row.id,
+                no: rawNo !== undefined && rawNo !== null && String(rawNo).trim() !== ''
+                    ? (Number.isFinite(parsedNo) ? parsedNo : String(rawNo).trim())
+                    : (total - index),
+                isPinned: Boolean(row.is_pinned ?? row.isPinned ?? row.pinned ?? false),
+                title: String(row.title ?? row['제목'] ?? '').trim(),
+                date: formatDateText(row.date ?? row.published_at ?? row.created_at ?? row['일자'] ?? ''),
+                content: String(row.content ?? row.body ?? row['내용'] ?? ''),
+                imageUrl: String(row.imageUrl ?? row.image_url ?? row.image ?? row['이미지'] ?? '').trim(),
+                videoUrl: String(row.videoUrl ?? row.video_url ?? row.video ?? row['동영상'] ?? '').trim(),
+                docUrl: String(row.docUrl ?? row.doc_url ?? row.doc ?? row['문서'] ?? '').trim(),
+                docName: String(row.docName ?? row.doc_name ?? row['문서명'] ?? '').trim(),
+                linkUrl: String(row.linkUrl ?? row.link_url ?? row.link ?? row['링크'] ?? '').trim(),
+                linkName: String(row.linkName ?? row.link_name ?? row['링크명'] ?? '').trim()
+            };
+        }
+
+        function renderHomeNewsList(posts) {
+            const listEl = document.getElementById('home-news-list');
+            if (!posts || posts.length === 0) {
+                listEl.innerHTML = '<li class="px-5 sm:px-6 py-5 text-sm text-gray-500 text-center">등록된 공지 및 소식이 없습니다.</li>';
+                return;
+            }
+
+            listEl.innerHTML = posts.map((post, index) => {
+                const badge = post.isPinned
+                    ? '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-600 text-white flex-shrink-0">공지</span>'
+                    : '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 flex-shrink-0">소식</span>';
+                const rowBg = post.isPinned ? 'bg-blue-50/35 hover:bg-blue-50/75' : 'hover:bg-gray-50';
+                const titleClass = post.isPinned ? 'font-bold text-blue-950' : 'font-semibold text-gray-800';
+
+                return `
+                    <li>
+                        <button type="button" onclick="openHomeNewsModal(${index})"
+                            class="w-full text-left px-5 sm:px-6 py-3.5 ${rowBg} transition flex items-center justify-between gap-4 group">
+                            <div class="flex items-center gap-3 min-w-0">
+                                ${badge}
+                                <span class="truncate text-sm sm:text-base ${titleClass} group-hover:text-blue-600 transition">
+                                    ${escapeHtml(post.title)}
+                                </span>
+                            </div>
+                            <span class="text-xs sm:text-sm text-gray-400 whitespace-nowrap flex-shrink-0">${escapeHtml(post.date)}</span>
+                        </button>
+                    </li>
+                `;
+            }).join('');
+        }
+
+        function openHomeNewsModal(index) {
+            const post = homeNewsPosts[index];
+            if (!post) return;
+
+            document.getElementById('modal-no').innerText = post.isPinned
+                ? `공지 | No. ${post.no || ''}`
+                : `No. ${post.no || ''}`;
+            document.getElementById('modal-date').innerText = post.date || '';
+            document.getElementById('modal-title').innerText = post.title || '';
+            renderPostContent(document.getElementById('modal-content'), post.content);
+
+            const imgUrl = formatImageUrl(post.imageUrl);
+            const imgBox = document.getElementById('modal-image-box');
+            const imgEl = document.getElementById('modal-image');
+            if (imgUrl) {
+                imgEl.src = imgUrl;
+                imgBox.classList.remove('hidden');
+            } else {
+                imgEl.src = '';
+                imgBox.classList.add('hidden');
+            }
+
+            const ytUrl = formatYoutubeUrl(post.videoUrl);
+            const vidBox = document.getElementById('modal-video-box');
+            const vidEl = document.getElementById('modal-video');
+            if (ytUrl) {
+                vidEl.src = ytUrl;
+                vidBox.classList.remove('hidden');
+            } else {
+                vidEl.src = '';
+                vidBox.classList.add('hidden');
+            }
+
+            const docUrl = sanitizeUrl(post.docUrl);
+            const docName = post.docName || '첨부문서 보기';
+            const linkUrl = sanitizeUrl(post.linkUrl);
+            const linkName = post.linkName || '관련 링크 바로가기';
+
+            const attachBox = document.getElementById('modal-attachments');
+            const docBtn = document.getElementById('modal-doc-btn');
+            const linkBtn = document.getElementById('modal-link-btn');
+
+            if (docUrl) {
+                docBtn.href = docUrl;
+                document.getElementById('modal-doc-text').innerText = docName;
+                docBtn.classList.remove('hidden');
+            } else {
+                docBtn.href = '#';
+                docBtn.classList.add('hidden');
+            }
+
+            if (linkUrl) {
+                linkBtn.href = linkUrl;
+                document.getElementById('modal-link-text').innerText = linkName;
+                linkBtn.classList.remove('hidden');
+            } else {
+                linkBtn.href = '#';
+                linkBtn.classList.add('hidden');
+            }
+
+            if (docUrl || linkUrl) {
+                attachBox.classList.remove('hidden');
+            } else {
+                attachBox.classList.add('hidden');
+            }
+
+            document.getElementById('post-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePostModal() {
+            document.getElementById('post-modal').classList.add('hidden');
+            document.getElementById('modal-video').src = '';
+            document.body.style.overflow = '';
+        }
+
+        async function loadHomeNews() {
+            const listEl = document.getElementById('home-news-list');
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}?select=*`, {
+                    method: 'GET',
+                    headers: {
+                        apikey: SUPABASE_KEY,
+                        Accept: 'application/json'
+                    }
+                });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+                const rows = await res.json();
+                if (!Array.isArray(rows)) throw new Error('Invalid response');
+
+                const normalized = rows.map((row, idx) => normalizeHomePost(row, idx, rows.length));
+                normalized.sort((a, b) => {
+                    if (a.isPinned !== b.isPinned) return a.isPinned ? -1 : 1;
+                    const noA = Number(a.no);
+                    const noB = Number(b.no);
+                    if (Number.isFinite(noA) && Number.isFinite(noB) && noA !== noB) {
+                        return noB - noA;
+                    }
+                    const dateCmp = String(b.date).localeCompare(String(a.date));
+                    if (dateCmp !== 0) return dateCmp;
+                    return String(b.id).localeCompare(String(a.id), undefined, { numeric: true });
+                });
+
+                homeNewsPosts = normalized.slice(0, 5);
+                renderHomeNewsList(homeNewsPosts);
+            } catch (err) {
+                console.warn('메인 최신 뉴스 불러오기 실패:', err);
+                listEl.innerHTML = '<li class="px-5 sm:px-6 py-5 text-sm text-gray-500 text-center">소식을 불러오지 못했습니다. <a href="news.html" class="text-blue-600 font-semibold hover:underline ml-1">게시판에서 확인하기</a></li>';
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePostModal();
+        });
+
+        document.addEventListener('DOMContentLoaded', loadHomeNews);
+    </script>
 
 </body>
 
