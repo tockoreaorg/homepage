@@ -631,96 +631,6 @@
                 curriTopic: '',
                 curriDetail: '',
                 applyUrl: ''
-            },
-            {
-                id: 'FE',
-                category: 'Certification Exams',
-                title: 'Fundamental Exam',
-                type: '오프라인',
-                time: '-',
-                price: '-',
-                year: '2025',
-                scheduleString: '1월(11일(토)), 7월(12일(토)), 2026년 1월(17일(토))',
-                desc: '',
-                curriDay: '',
-                curriTopic: '',
-                curriDetail: '',
-                applyUrl: ''
-            },
-            {
-                id: 'FE-ON',
-                category: 'Certification Exams',
-                title: 'Fundamental Exam (온라인)',
-                type: '온라인',
-                time: '-',
-                price: '-',
-                year: '2025',
-                scheduleString: '수시',
-                desc: '',
-                curriDay: '',
-                curriTopic: '',
-                curriDetail: '',
-                applyUrl: ''
-            },
-            {
-                id: 'SCL',
-                category: 'Certification Exams',
-                title: 'Supply Chain Logistics',
-                type: '오프라인',
-                time: '-',
-                price: '-',
-                year: '2025',
-                scheduleString: '4월(12일(토)), 11월(8일(토))',
-                desc: '',
-                curriDay: '',
-                curriTopic: '',
-                curriDetail: '',
-                applyUrl: ''
-            },
-            {
-                id: 'PM',
-                category: 'Certification Exams',
-                title: 'Project Management',
-                type: '오프라인',
-                time: '-',
-                price: '-',
-                year: '2025',
-                scheduleString: '4월(12일(토)), 11월(8일(토))',
-                desc: '',
-                curriDay: '',
-                curriTopic: '',
-                curriDetail: '',
-                applyUrl: ''
-            },
-            {
-                id: 'FM',
-                category: 'Certification Exams',
-                title: 'Finance & Measures',
-                type: '오프라인',
-                time: '-',
-                price: '-',
-                year: '2025',
-                scheduleString: '4월(12일(토)), 11월(8일(토))',
-                desc: '',
-                curriDay: '',
-                curriTopic: '',
-                curriDetail: '',
-                applyUrl: ''
-            },
-            {
-                id: 'TP',
-                category: 'Certification Exams',
-                title: 'Thinking Process',
-                type: '오프라인',
-                time: '-',
-                price: '-',
-                year: '2025',
-                scheduleString: '4월(12일(토)), 11월(8일(토))',
-                desc: '',
-                curriDay: '',
-                curriTopic: '',
-                curriDetail: '',
-                applyUrl: ''
             }
         ];
 
@@ -743,7 +653,8 @@
             const groupMap = {};
 
             data.forEach(course => {
-                const cat = course.category || '기타 과정';
+                const cat = String(course.category || '기타 과정').trim();
+                if (cat === 'Certification Exams') return;
                 if (!groupMap[cat]) {
                     groupMap[cat] = [];
                     groups.push(cat);
