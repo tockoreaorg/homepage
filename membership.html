@@ -425,11 +425,10 @@
 
         <!-- 섹션 3: 회원가입신청 바로가기 버튼 -->
         <section class="bg-blue-600 rounded-2xl p-8 text-center text-white shadow-md">
-            <h3 class="text-xl sm:text-2xl font-bold mb-2">한국TOC협회와 함께 새로운 가치를 만들어 가세요</h3>
-            <p class="text-blue-100 text-sm sm:text-base mb-6">온라인 신청서를 작성하시면 입회 및 회비 납부 절차를 안내해 드립니다.</p>
-            <a id="membership-apply-btn" href="#" target="_blank" rel="noopener noreferrer"
+            <h3 class="text-xl sm:text-2xl font-bold mb-6">한국TOC협회와 함께 새로운 가치를 만들어 가세요</h3>
+            <a id="membership-apply-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScE3pB9MzI42ogZ2lho-5zrgDbikCiP93neyxLSxOjFbKmipg/viewform?usp=header" target="_blank" rel="noopener noreferrer"
                 class="inline-flex items-center gap-2 bg-white text-blue-700 font-extrabold px-8 py-4 rounded-full hover:bg-blue-50 transition shadow-sm text-base">
-                <span id="membership-apply-text">회원가입신청 및 회비 결제 ▶ 바로가기</span>
+                <span id="membership-apply-text">회원가입신청 및 회비 결제 바로가기</span>
             </a>
         </section>
 
@@ -497,7 +496,7 @@
                 { group: '단체회원', type: '영리단체 PLATINUM', entryFee: '-', annualFee: '', validity: '연회비 납부 후 2년' }
             ],
             links: [
-                { buttonText: '회원가입신청 및 회비 결제 ▶ 바로가기', applyUrl: '' }
+                { buttonText: '회원가입신청 및 회비 결제 바로가기', applyUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScE3pB9MzI42ogZ2lho-5zrgDbikCiP93neyxLSxOjFbKmipg/viewform?usp=header' }
             ]
         };
 
@@ -570,11 +569,12 @@
             const btn = document.getElementById('membership-apply-btn');
             const textEl = document.getElementById('membership-apply-text');
             const info = (links && links.length > 0) ? links[0] : {};
+            const fallbackLink = DEFAULT_DATA.links[0];
 
-            if (info.buttonText) {
-                textEl.innerText = info.buttonText;
-            }
-            const url = String(info.applyUrl || '').trim();
+            const buttonText = String(info.buttonText || fallbackLink.buttonText).replace(/\s*▶\s*/g, ' ').trim();
+            textEl.innerText = buttonText;
+
+            const url = String(info.applyUrl || fallbackLink.applyUrl).trim();
             if (url && url.startsWith('http')) {
                 btn.href = url;
                 btn.onclick = null;
