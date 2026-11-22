@@ -390,52 +390,495 @@
 
             <div class="space-y-2">
                 <p>응용 시험에 합격하려면 총 100점 만점에 70점 이상을 득점해야 한다.</p>
-                <p>기본시험 준비를 위해 다음 학습자료를 추천한다.</p>
             </div>
         </section>
 
-        <!-- 추천 학습자료 -->
-        <section class="space-y-4">
-            <article class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-                <h2 class="text-lg font-bold text-gray-900 mb-2">TOC 기본 지식에 대한 무료 동영상</h2>
-                <p class="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
-                    TOCICO에서 제공하는 동영상을 무료로 액세스할 수 있다. TOC의 7 개 주요 영역에 대한 간략한 소개와 설명을 제공한다.
-                </p>
-                <a href="https://www.tocico.org/page/toc_basics_portal" target="_blank" rel="noopener noreferrer"
-                    class="inline-flex items-center text-sm font-bold text-blue-600 hover:underline">
-                    자세한 내용 (영문) ▶ 바로가기
-                </a>
-            </article>
+        <!-- TOCICO Fundamentals 인증 시험 (6개 분야) -->
+        <section class="space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+                <div>
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+                        TOCICO Fundamental Exams (Level 1)
+                    </span>
+                    <h2 class="text-2xl font-bold text-gray-900">TOCICO Fundamentals 인증 시험 안내</h2>
+                </div>
+            </div>
 
-            <article class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-                <h2 class="text-lg font-bold text-gray-900 mb-2">토픽 별 포털</h2>
-                <p class="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
-                    TOC 주제별로 추가 무료 동영상을 찾을 수 있다.
-                </p>
-                <a href="https://www.tocico.org/page/portaltopics" target="_blank" rel="noopener noreferrer"
-                    class="inline-flex items-center text-sm font-bold text-blue-600 hover:underline">
-                    자세한 내용 (영문) ▶ 바로가기
-                </a>
-            </article>
+            <!-- 분야 선택 탭 -->
+            <div class="flex flex-wrap gap-2" role="tablist" aria-label="Fundamentals 시험 분야 선택">
+                <button type="button" onclick="selectFundTab('toc')" id="tab-btn-toc"
+                    class="fund-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-blue-600 text-white shadow-sm transition">
+                    TOC (통합)
+                </button>
+                <button type="button" onclick="selectFundTab('ccpm')" id="tab-btn-ccpm"
+                    class="fund-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-white text-gray-700 border border-gray-200 hover:bg-blue-50 transition">
+                    CCPM
+                </button>
+                <button type="button" onclick="selectFundTab('tp')" id="tab-btn-tp"
+                    class="fund-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-white text-gray-700 border border-gray-200 hover:bg-blue-50 transition">
+                    TP
+                </button>
+                <button type="button" onclick="selectFundTab('scl')" id="tab-btn-scl"
+                    class="fund-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-white text-gray-700 border border-gray-200 hover:bg-blue-50 transition">
+                    SCL
+                </button>
+                <button type="button" onclick="selectFundTab('pom')" id="tab-btn-pom"
+                    class="fund-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-white text-gray-700 border border-gray-200 hover:bg-blue-50 transition">
+                    POM
+                </button>
+                <button type="button" onclick="selectFundTab('fm')" id="tab-btn-fm"
+                    class="fund-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-white text-gray-700 border border-gray-200 hover:bg-blue-50 transition">
+                    FM
+                </button>
+            </div>
 
-            <article class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-                <h2 class="text-lg font-bold text-gray-900 mb-2">학습 자료</h2>
-                <p class="text-sm sm:text-base text-gray-700 leading-relaxed mb-3">
-                    여기에 소개된 참고 및 리뷰 자료에는 Fundamentals Exam을 성공적으로 완료하기 위해 알아야 할 정보와 지식의 종류가 포함되어 있다.<br>
-                    이것은 제안된 목록일 뿐 완전하지 않으며, Fundamentals Examination을 검토, 공부 및 준비하는 데 유용한 지침을 제공한다.
-                </p>
-                <a href="https://www.tocico.org/page/fundamentals" target="_blank" rel="noopener noreferrer"
-                    class="inline-flex items-center text-sm font-bold text-blue-600 hover:underline">
-                    자세한 내용 (영문) ▶ 바로가기
-                </a>
-            </article>
-
-            <article class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-                <h2 class="text-lg font-bold text-gray-900 mb-2">Full Access</h2>
+            <!-- 1. TOC Fundamentals Certification -->
+            <article id="tab-panel-toc" class="fund-tab-panel bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">TOC Fundamentals 인증 (TOCFC™)</h3>
+                    <a href="https://www.tocico.org/toc-fundamentals-exam" target="_blank" rel="noopener noreferrer"
+                        class="text-xs font-bold text-blue-600 hover:underline whitespace-nowrap">TOCICO 원문 페이지 &rarr;</a>
+                </div>
                 <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
-                    과거 TOCICO Conference 프레젠테이션에 750 개 이상의 동영상 및 과거 웹 세미나 150 개 이상의 추가 자료실이 있다.<br>
-                    하지만 액세스하려면 유료 회원이어야 한다.
+                    <strong>TOC Fundamentals Exam</strong>은 제약이론(TOC)의 신념, 원리 및 핵심 개념에 대한 명확하고 기초적인 이해를 입증한 사람에게 수여되는 세계적으로 인정받는 인증입니다. 이 인증은 모든 TOC 응용 분야에서 <strong>Certified Practitioner</strong> 또는 <strong>Certified Implementer</strong>와 같은 상위 자격을 취득하기 위한 첫 번째 단계이기도 합니다. 합격 시 <strong>TOC Fundamentals Certification (TOCFC™)</strong>을 취득하고 디지털 인증서를 받게 됩니다.
                 </p>
+
+                <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+                    <h4 class="font-bold text-gray-900 mb-1.5">왜 이 시험에 응시해야 하는가?</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        TOC를 검토하거나 도입 중인 조직에서 일하고 있거나 단순히 개인적인 이해를 깊게 하고자 하는 경우, 이 시험은 적극적으로 기여할 수 있는 공통 언어와 핵심 지식을 제공합니다. 또한 이 인증은 지속적 개선과 시스템 사고에 대한 헌신을 보여주는 가치 있는 개인적·전문적 성취입니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">시험 구조</h4>
+                        <ul class="space-y-1 text-sm text-gray-700">
+                            <li>· 객관식 60문항</li>
+                            <li>· 시험 시간: 2.5시간 제한</li>
+                            <li>· 온라인 응시 가능: 영어</li>
+                            <li>· 2027년 예정 (오프라인 전용): 중국어(간체·번체)</li>
+                        </ul>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">응시료</h4>
+                        <p class="text-xs text-gray-600 mb-2">TOCICO 회원은 모든 인증 시험에서 특별 할인 가격을 적용받습니다. 비회원 응시료에는 TOCICO 1년 멤버십이 포함됩니다. (영어·스페인어 선택 가능)</p>
+                        <ul class="space-y-1 text-sm text-gray-800 font-medium">
+                            <li>· 영어 — 회원: $99 / 비회원: $196</li>
+                            <li>· 스페인어 — 회원: $99 / 비회원: $196</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-bold text-gray-900 text-lg">시험 영역 및 학습 목표</h4>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-2">
+                        <h5 class="font-bold text-blue-800">TOC 기본 개념 (TOC Fundamentals Concepts)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 기초적인 TOC 원리, 핵심 지표 및 TOC 사고의 주요 구분점에 대한 인식과 이해를 입증합니다.</p>
+                        <ul class="text-sm text-gray-600 space-y-1 pl-2">
+                            <li>&gt; 기본적인 TOC 신념, 패러다임 및 집중개선 5단계(Five Focusing Steps) 이해 및 적용</li>
+                            <li>&gt; 단순 시스템과 복잡 시스템의 구분</li>
+                            <li>&gt; 목표, 필요조건, 제약 및 전사적 TOC 지표 설명</li>
+                            <li>&gt; '원가 세계(Cost World)' 사고와 '쓰루풋 세계(Throughput World)' 사고의 구분</li>
+                        </ul>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-2">
+                        <h5 class="font-bold text-blue-800">TOC 사고 프로세스 (TOC Thinking Processes)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 구조화된 문제 해결을 지원하는 핵심 TOC 사고 프로세스 개념, 도구 및 기본 논리 관계에 대한 인식과 이해를 입증합니다.</p>
+                        <ul class="text-sm text-gray-600 space-y-1 pl-2">
+                            <li>&gt; 변화 시퀀스(Change Sequence) 및 핵심 TP 도구 식별</li>
+                            <li>&gt; 논리적 인과관계, 타당한 의심의 범주(CLR) 및 가정 적용</li>
+                            <li>&gt; 주어진 시나리오에 대한 갈등 구름(Conflict Clouds) 및 논리 가지(Logical Branches) 작성</li>
+                            <li>&gt; 주사액(Injections), 개체 간 관계 및 윈-윈(Win-Win) 갈등 해소 설명</li>
+                        </ul>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-2">
+                        <h5 class="font-bold text-blue-800">TOC 응용 (TOC Applications)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 병목 식별, 버퍼 활용, 효과적인 의사소통 및 변화 관리 지원을 포함하여 공급망, 재무, 프로젝트 관리 전반에 걸친 TOC 원리에 대한 인식과 이해를 입증합니다.</p>
+                        <ul class="text-sm text-gray-600 space-y-1 pl-2">
+                            <li>&gt; 다음 분야에서의 TOC 원리 적용 설명: 1. 공급망/물류(Simplified-DBR) / 2. 재무 및 성과측정 / 3. 크리티컬 체인 프로젝트 관리(CCPM) — 단일 및 다중 프로젝트 환경</li>
+                            <li>&gt; 병목 식별, 버퍼 활용 및 효과적인 의사소통 흐름 구축</li>
+                            <li>&gt; TOC의 계층적 접근법(변화의 저항 6단계)을 사용한 변화 저항 이해 및 대응</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2. CCPM Fundamentals Certification -->
+            <article id="tab-panel-ccpm" class="fund-tab-panel hidden bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">크리티컬 체인 프로젝트 관리 Fundamentals 인증 (TOCFC™)</h3>
+                    <a href="https://www.tocico.org/ccpm-fundamentals-exam" target="_blank" rel="noopener noreferrer"
+                        class="text-xs font-bold text-blue-600 hover:underline whitespace-nowrap">TOCICO 원문 페이지 &rarr;</a>
+                </div>
+                <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    <strong>CCPM Fundamentals Exam</strong>은 크리티컬 체인 프로젝트 관리(CCPM)에 대한 TOC의 핵심 신념, 개념 및 원리를 명확하고 기초적으로 이해했음을 입증하는 세계적으로 인정받는 인증입니다. 이 인증은 CCPM 분야의 <strong>Certified Practitioner</strong> 또는 <strong>Certified Implementer</strong>로 나아가는 첫 번째 단계이며, 합격 시 CCPM 분야 <strong>TOC Fundamentals Certified (TOCFC™)</strong> 자격을 얻고 디지털 인증서를 받게 됩니다.
+                </p>
+
+                <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+                    <h4 class="font-bold text-gray-900 mb-1.5">왜 이 시험에 응시해야 하는가?</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        조직이 CCPM 도입을 계획 중이거나 시작했거나 이미 실행 중이라면, 이러한 지식의 토대와 공통 언어를 구축함으로써 경험을 향상시키고 더 큰 성공을 이루는 데 기여할 수 있습니다. 인증 취득은 개인적인 성취감과 전문적인 보람을 모두 주는 성과입니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">시험 구조</h4>
+                        <ul class="space-y-1 text-sm text-gray-700">
+                            <li>· 객관식 50문항</li>
+                            <li>· 시험 시간: 2시간 제한</li>
+                            <li>· 온라인 응시 가능: 영어</li>
+                            <li>· 오프라인 응시 가능: 영어</li>
+                        </ul>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">응시료</h4>
+                        <p class="text-xs text-gray-600 mb-2">TOCICO 회원은 모든 인증 시험에서 특별 할인 가격을 적용받습니다. 비회원 응시료에는 TOCICO 1년 멤버십이 포함됩니다.</p>
+                        <ul class="space-y-1 text-sm text-gray-800 font-medium">
+                            <li>· 회원: $99 / 비회원: $196</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-bold text-gray-900 text-lg">시험 영역 및 학습 목표</h4>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">단일 프로젝트 (Single Project)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 계획, 일정 수립, 실행 및 지속적 개선의 기초 개념을 포함하여 단일 프로젝트 환경에 적용되는 크리티컬 체인 원리에 대한 인식과 기본 이해를 입증합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">다중 프로젝트 (Multi Project)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 기본 포트폴리오 계획, 일정 수립 고려사항 및 실행 관리 원리를 포함하여 다중 프로젝트 환경에 크리티컬 체인 개념이 어떻게 적용되는지 인식과 이해를 입증합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">TOC 개념 (TOC Concepts)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 크리티컬 체인 프로젝트 관리를 뒷받침하는 필수 제약이론(TOC) 용어, 핵심 원리 및 기초 사고 프로세스 요소에 대한 인식과 이해를 입증합니다.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3. TP Fundamentals Certification -->
+            <article id="tab-panel-tp" class="fund-tab-panel hidden bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">사고 프로세스 Fundamentals 인증 (TOCFC™)</h3>
+                    <a href="https://www.tocico.org/tp-fundamentals-exam" target="_blank" rel="noopener noreferrer"
+                        class="text-xs font-bold text-blue-600 hover:underline whitespace-nowrap">TOCICO 원문 페이지 &rarr;</a>
+                </div>
+                <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    <strong>Thinking Processes Fundamentals Exam</strong>은 사고 프로세스(Thinking Processes)에 대한 TOC의 핵심 신념, 개념 및 원리를 명확하고 기초적으로 이해했음을 입증하는 세계적으로 인정받는 인증입니다. 이 인증은 사고 프로세스 분야의 <strong>Certified Practitioner</strong> 또는 <strong>Certified Implementer</strong>로 나아가는 첫 번째 단계이며, 합격 시 사고 프로세스 분야 <strong>TOC Fundamentals Certified (TOCFC™)</strong> 자격을 얻고 디지털 인증서를 받게 됩니다.
+                </p>
+
+                <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+                    <h4 class="font-bold text-gray-900 mb-1.5">왜 이 시험에 응시해야 하는가?</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        비판적 사고와 문제 해결 역량을 강화하고자 하거나 TOC 사고 프로세스 도구를 적용하는 조직에 합류할 준비를 하고 있다면, 탄탄한 지식의 기반이 목표 달성에 큰 도움이 됩니다. 인증 취득은 개인적 성장과 전문적 강점을 모두 제공하는 의미 있는 성취입니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">시험 구조</h4>
+                        <ul class="space-y-1 text-sm text-gray-700">
+                            <li>· 객관식 50문항</li>
+                            <li>· 시험 시간: 2시간 제한</li>
+                            <li>· 온라인 응시 가능: 영어</li>
+                            <li>· 오프라인 응시 가능: 영어</li>
+                        </ul>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">응시료</h4>
+                        <p class="text-xs text-gray-600 mb-2">TOCICO 회원은 모든 인증 시험에서 특별 할인 가격을 적용받습니다. 비회원 응시료에는 TOCICO 1년 멤버십이 포함됩니다.</p>
+                        <ul class="space-y-1 text-sm text-gray-800 font-medium">
+                            <li>· 회원: $99 / 비회원: $196</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-bold text-gray-900 text-lg">시험 영역 및 학습 목표</h4>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">기본 TP 개념 (Basic TP Concepts)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 기본 구성 요소와 타당한 의심의 범주(Categories of Legitimate Reservation)를 포함한 기초 사고 프로세스 개념에 대한 인식과 기본 이해를 입증합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">범용 TP 도구 (Generic TP Tools)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 인과관계를 도식화하고 분석하며 표현하는 데 사용되는 핵심 범용 사고 프로세스 도구 및 구성 요소에 대한 인식과 이해를 입증합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">특수 TP 주제 (Special TP Topics)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 기본 변화 시퀀스 및 구조화된 문제 해결에서의 TP 개념 실무 활용을 포함한 기초 사고 프로세스 응용에 대한 인식과 이해를 입증합니다.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 space-y-3 text-sm">
+                    <h4 class="font-bold text-gray-900 text-base">학습 자료 (Study Materials)</h4>
+                    <div>
+                        <p class="font-semibold text-gray-800 mb-1">TOCICO 멤버십 포함 자료:</p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                            <li>TOCICO Dictionary</li>
+                            <li>The Origin of the Goal Tree</li>
+                            <li>Mystery Analysis</li>
+                            <li>Magic Druids</li>
+                            <li>The Thinking Processes Basics Workshop</li>
+                            <li>0 to 60 Introduction to the Thinking Processes</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800 mb-1">기타 자료 (TOCICO 멤버십 미포함):</p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                            <li>The Logical Thinking Process: A Systems Approach to Complex Problem Solving (William Dettmer 저)</li>
+                            <li>Thinking for a Change, Putting the TOC Thinking Processes to Use (Lisa J. Scheinkopf 저)</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4. SCL Fundamentals Certification -->
+            <article id="tab-panel-scl" class="fund-tab-panel hidden bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">공급망 물류 Fundamentals 인증 (TOCFC™)</h3>
+                    <a href="https://www.tocico.org/scl-fundamentals-exam" target="_blank" rel="noopener noreferrer"
+                        class="text-xs font-bold text-blue-600 hover:underline whitespace-nowrap">TOCICO 원문 페이지 &rarr;</a>
+                </div>
+                <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    <strong>SCL Fundamentals Exam</strong>은 공급망 물류(Supply Chain Logistics)에 대한 TOC의 핵심 신념, 개념 및 원리를 명확하고 기초적으로 이해했음을 입증하는 세계적으로 인정받는 인증입니다. 이 인증은 공급망 물류 분야의 <strong>Certified Practitioner</strong> 또는 <strong>Certified Implementer</strong>로 나아가는 첫 번째 단계이며, 합격 시 SCL 분야 <strong>TOC Fundamentals Certified (TOCFC™)</strong> 자격을 얻고 디지털 인증서를 받게 됩니다.
+                </p>
+
+                <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+                    <h4 class="font-bold text-gray-900 mb-1.5">왜 이 시험에 응시해야 하는가?</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        조직이 DBR 또는 S-DBR 도입을 계획·시작·실행 중이라면, 탄탄한 기초와 공통 언어를 구축함으로써 그 경험을 최대한 활용할 수 있습니다. 이 인증은 TOC 수요기반 보충(Demand Driven Replenishment)과 재고 관리에 관심이 있거나, 상위 공급망 물류 인증을 추구하거나, TOC 기반 실행을 관리·지원하는 분들에게 적합합니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">시험 구조</h4>
+                        <ul class="space-y-1 text-sm text-gray-700">
+                            <li>· 객관식 50문항</li>
+                            <li>· 시험 시간: 2시간 제한</li>
+                            <li>· 온라인 응시 가능: 영어</li>
+                            <li>· 오프라인 응시 가능: 영어</li>
+                        </ul>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">응시료</h4>
+                        <p class="text-xs text-gray-600 mb-2">TOCICO 회원은 모든 인증 시험에서 특별 할인 가격을 적용받습니다. 비회원 응시료에는 TOCICO 1년 멤버십이 포함됩니다.</p>
+                        <ul class="space-y-1 text-sm text-gray-800 font-medium">
+                            <li>· 회원: $99 / 비회원: $196</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-bold text-gray-900 text-lg">시험 영역 및 학습 목표</h4>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">5단계 / 제약 / 수요기반(Pull) 보충</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> TOC 프레임워크 내에서의 집중개선 5단계, 공급망 성과에서 제약의 역할, 그리고 수요기반(Pull) 보충의 기초 원리에 대한 인식과 기본 이해를 입증합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">동적 버퍼 관리 / 우선순위 / 실행(S&amp;T)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 동적 버퍼 관리(DBM)의 목적과 기본 개념, 버퍼 기반 우선순위, 그리고 TOC 공급망 실행을 이끄는 전략과 전술 나무(S&amp;T)의 역할에 대한 인식과 이해를 입증합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">재고 버퍼: 배치·산정 및 역물류 / 개념과 정의</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> Fundamentals 수준에 부합하는 단순 의사결정 및 성과 평가 시나리오에서 TOC 재무 및 측정 원리가 어떻게 적용되는지에 대한 인식을 입증합니다.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 space-y-3 text-sm">
+                    <h4 class="font-bold text-gray-900 text-base">학습 자료 (Study Materials)</h4>
+                    <div>
+                        <p class="font-semibold text-gray-800 mb-1">TOCICO 멤버십 포함 자료:</p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                            <li>TOCICO Dictionary</li>
+                            <li>Strategy &amp; Tactics Trees</li>
+                            <li>TOC Retail - The Works</li>
+                            <li>Modern TOC Distribution &amp; Retail</li>
+                            <li>Time Buffers, Stock Buffers and Buffer Management - The Key Insights and their Universal Use</li>
+                            <li>0 to 60: Introduction to Distribution / Supply Chain</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800 mb-1">기타 자료 (TOCICO 멤버십 미포함):</p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                            <li>The Goal 도서 (더 골)</li>
+                            <li>The Goal 영화</li>
+                            <li>Isn't it Obvious</li>
+                            <li>The Choice (선택)</li>
+                            <li>TOC Insights into Distribution and Supply Chain</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5. POM Fundamentals Certification -->
+            <article id="tab-panel-pom" class="fund-tab-panel hidden bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">생산 및 운영 관리 Fundamentals 인증 (TOCFC™)</h3>
+                    <a href="https://www.tocico.org/pom-fundamentals-exam" target="_blank" rel="noopener noreferrer"
+                        class="text-xs font-bold text-blue-600 hover:underline whitespace-nowrap">TOCICO 원문 페이지 &rarr;</a>
+                </div>
+                <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    <strong>POM Fundamentals Exam</strong>은 생산 및 운영 관리(Production and Operations Management)에 대한 TOC의 핵심 신념, 개념 및 원리를 명확하고 기초적으로 이해했음을 입증하는 세계적으로 인정받는 인증입니다. 이 인증은 생산 및 운영 관리 분야의 <strong>Certified Practitioner</strong> 또는 <strong>Certified Implementer</strong>로 나아가는 첫 번째 단계이며, 합격 시 POM 분야 <strong>TOC Fundamentals Certified (TOCFC™)</strong> 자격을 얻고 디지털 인증서를 받게 됩니다.
+                </p>
+
+                <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+                    <h4 class="font-bold text-gray-900 mb-1.5">왜 이 시험에 응시해야 하는가?</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        DBR 또는 S-DBR을 탐색하거나 준비 중이거나 이미 적용 중인 개인 및 조직에게, 이러한 개념에 대한 명확한 이해와 공통 언어를 확보하는 것은 실행 성공과 참여도를 크게 높여줍니다. 특히 TOC DBR/S-DBR 및 지속적 개선 프로세스(POOGI)에 관심이 있거나, 상위 공급망 물류 인증을 추구하거나, TOC 기반 생산·운영 이니셔티브를 관리·지원하는 분들에게 가치 있는 이정표가 됩니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">시험 구조</h4>
+                        <ul class="space-y-1 text-sm text-gray-700">
+                            <li>· 객관식 50문항</li>
+                            <li>· 시험 시간: 2시간 제한</li>
+                            <li>· 온라인 응시 가능: 영어</li>
+                            <li>· 오프라인 응시 가능: 영어</li>
+                        </ul>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">응시료</h4>
+                        <p class="text-xs text-gray-600 mb-2">TOCICO 회원은 모든 인증 시험에서 특별 할인 가격을 적용받습니다. 비회원 응시료에는 TOCICO 1년 멤버십이 포함됩니다.</p>
+                        <ul class="space-y-1 text-sm text-gray-800 font-medium">
+                            <li>· 회원: $99 / 비회원: $196</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-bold text-gray-900 text-lg">시험 영역 및 학습 목표</h4>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">5단계 / 제약 / DBR / S-DBR / TP / 철학</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 집중개선 5단계, 제약, 드럼-버퍼-로프(DBR/S-DBR), 핵심 TOC 철학 및 사고 프로세스를 포함한 기초 생산·운영 개념에 대한 인식과 이해를 입증합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">버퍼 관리 / 측정 / 로프 / 버퍼 / 네트워크</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 버퍼 관리, 성과 측정 및 로프·버퍼·네트워크 원리의 활용을 포함한 주요 TOC 생산·운영 개념에 대한 인식과 이해를 입증합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">확장 응용 (4CF, Lean, CCPM, MTS, MTO/MTA, 유통)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 4가지 흐름 유형(4CF), 린(Lean), 크리티컬 체인 프로젝트 관리(CCPM), MTS/MTO/MTA 및 유통 시스템을 포함한 다양한 환경에서의 TOC 응용에 대한 인식과 이해를 입증합니다.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 space-y-3 text-sm">
+                    <h4 class="font-bold text-gray-900 text-base">학습 자료 (Study Materials)</h4>
+                    <div>
+                        <p class="font-semibold text-gray-800 mb-1">Fundamentals Course - Production &amp; Operations Management ($99) 모듈:</p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                            <li>TOC General Foundations</li>
+                            <li>The Physics of Flow</li>
+                            <li>The Operational Conflict</li>
+                            <li>Gated Release</li>
+                            <li>Classic Drum-Buffer-Rope (DBR)</li>
+                            <li>Simplified Drum-Buffer-Rope (S-DBR)</li>
+                            <li>Buffer Management and Continuous Improvement</li>
+                            <li>VATI Analysis</li>
+                            <li>Make-to-Availability (MTA)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800 mb-1">TOCICO 멤버십 포함 자료:</p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                            <li>TOCICO Dictionary</li>
+                            <li>Reliable Rapid Response Strategy &amp; Tactics tree</li>
+                            <li>The Supply Chain Solutions of TOC Basics workshop</li>
+                            <li>Time Buffers, Stock Buffers and Buffer Management - The Key Insights and their Universal Use</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800 mb-1">기타 자료:</p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                            <li>The Goal 도서 / 영화</li>
+                            <li>TOC Handbook Chapter 8: DBR, Buffer Management and VATI Flow Classification</li>
+                            <li>TOC Handbook Chapter 9: From DBR to Simplified DBR for Make-To-Order</li>
+                            <li>Standing on the Shoulders of Giants (Eli Goldratt 박사 논문)</li>
+                            <li>TOC Handbook Chapter 10: Managing Make-To-Stock and the Concept of Make-to-Availability (MTA)</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 6. FM Fundamentals Certification -->
+            <article id="tab-panel-fm" class="fund-tab-panel hidden bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">재무 및 성과측정 Fundamentals 인증 (TOCFC™)</h3>
+                    <a href="https://www.tocico.org/fm-fundamentals-exam" target="_blank" rel="noopener noreferrer"
+                        class="text-xs font-bold text-blue-600 hover:underline whitespace-nowrap">TOCICO 원문 페이지 &rarr;</a>
+                </div>
+                <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    <strong>FM Fundamentals Exam</strong>은 재무 및 성과측정(Finance and Measures)에 대한 TOC의 핵심 신념, 개념 및 원리를 명확하고 기초적으로 이해했음을 입증하는 세계적으로 인정받는 인증입니다. 이 인증은 재무 및 성과측정 분야의 <strong>Certified Practitioner</strong> 또는 <strong>Certified Implementer</strong>로 나아가는 첫 번째 단계이며, 합격 시 FM 분야 <strong>TOC Fundamentals Certified (TOCFC™)</strong> 자격을 얻고 디지털 인증서를 받게 됩니다.
+                </p>
+
+                <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-5">
+                    <h4 class="font-bold text-gray-900 mb-1.5">왜 이 시험에 응시해야 하는가?</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        재무 분야에 종사하거나 조직 내 재무적 의사결정에 참여하고 있다면, 쓰루풋 회계(Throughput Accounting)의 원리 등 재무 및 성과측정에 대한 제약이론(TOC)의 접근 방식을 이해하는 것이 필수적입니다. 이러한 기초 지식과 공통 언어를 습득하면 재무 성과를 개선하고 더 나은 비즈니스 의사결정을 지원하는 역량을 크게 높일 수 있습니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">시험 구조</h4>
+                        <ul class="space-y-1 text-sm text-gray-700">
+                            <li>· 객관식 40문항</li>
+                            <li>· 시험 시간: 2시간 제한</li>
+                            <li>· 온라인 응시 가능: 영어</li>
+                            <li>· 오프라인 응시 가능: 영어</li>
+                        </ul>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5">
+                        <h4 class="font-bold text-gray-900 mb-2">응시료</h4>
+                        <p class="text-xs text-gray-600 mb-2">TOCICO 회원은 모든 인증 시험에서 특별 할인 가격을 적용받습니다. 비회원 응시료에는 TOCICO 1년 멤버십이 포함됩니다.</p>
+                        <ul class="space-y-1 text-sm text-gray-800 font-medium">
+                            <li>· 회원: $99 / 비회원: $196</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-bold text-gray-900 text-lg">시험 영역 및 학습 목표</h4>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">용어 / 개념 (Terms / Concepts)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 제약이론 프레임워크 내 기초적인 TOC 재무 및 성과측정 용어, 정의 및 핵심 개념에 대한 인식과 이해를 입증합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">성과측정 (Measurements)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> 쓰루풋(Throughput), 재고/투자(Inventory), 운영비용(Operating Expense)을 포함한 기본 TOC 측정 프레임워크와, 이러한 지표가 조직 성과 평가에 어떻게 정의되고 활용되는지에 대한 이해를 입증합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-xl p-5 space-y-1.5">
+                        <h5 class="font-bold text-blue-800">응용 (Applications)</h5>
+                        <p class="text-sm text-gray-700"><strong>목표:</strong> Fundamentals 지식 수준에 부합하는 단순 의사결정 및 성과 평가 시나리오에서 TOC 재무 및 성과측정 원리가 어떻게 적용되는지에 대한 인식을 입증합니다.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 space-y-3 text-sm">
+                    <h4 class="font-bold text-gray-900 text-base">학습 자료 (Study Materials)</h4>
+                    <div>
+                        <p class="font-semibold text-gray-800 mb-1">TOCICO 멤버십 포함 자료:</p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                            <li>Developing Local Operational Indicators and Money Buffers</li>
+                            <li>Finance &amp; Measures Basics workshop</li>
+                            <li>Evaporating Cash Constraint the TOC Way</li>
+                            <li>Throughput Accounting - Its Past, Present and a Vision for the Future</li>
+                            <li>0 to 60: Introduction to Finance and Measures</li>
+                            <li>TOC Based Finance Basics</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800 mb-1">기타 자료 (TOCICO 멤버십 미포함):</p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                            <li>Necessary &amp; Sufficient Series Session #6: A Look into Measurements</li>
+                            <li>Throughput Economics: Making Good Management Decisions</li>
+                            <li>TOC Self Learning Program on Finance and Measurements</li>
+                        </ul>
+                    </div>
+                </div>
             </article>
         </section>
 
@@ -449,6 +892,25 @@
         </div>
 
     </main>
+
+    <script>
+        function selectFundTab(key) {
+            document.querySelectorAll('.fund-tab-panel').forEach((panel) => {
+                panel.classList.add('hidden');
+            });
+            document.querySelectorAll('.fund-tab-btn').forEach((btn) => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-200');
+            });
+            const activePanel = document.getElementById('tab-panel-' + key);
+            const activeBtn = document.getElementById('tab-btn-' + key);
+            if (activePanel) activePanel.classList.remove('hidden');
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-200');
+                activeBtn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+            }
+        }
+    </script>
 
     <!-- 4. 공통 표준 푸터 -->
     <footer class="bg-gray-900 text-gray-400 py-6 mt-auto">
