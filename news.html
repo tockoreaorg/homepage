@@ -155,8 +155,59 @@
 
                     <a href="education.html"
                         class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Education</a>
-                    <a href="certification.html"
-                        class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Certification</a>
+                    <!-- CERTIFICATION -->
+
+                    <div class="relative group py-6">
+
+                        <button
+
+                            class="text-gray-700 hover:text-blue-600 font-semibold uppercase tracking-wider text-sm flex items-center gap-1">
+
+                            Certification
+
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+
+                                    d="M19 9l-7 7-7-7">
+
+                                </path>
+
+                            </svg>
+
+                        </button>
+
+                        <div
+
+                            class="dropdown-menu hidden absolute left-0 top-full mt-0 w-52 bg-white border border-gray-100 rounded-b-lg shadow-xl py-2">
+
+                            <a href="certification.html"
+
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Certification 단계</a>
+
+                            <a href="fund-exam.html"
+
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Fundamental Exam</a>
+
+                            <a href="appl-exam.html"
+
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Application Exam</a>
+
+                            <a href="tocico.html"
+
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">TOCICO 소개</a>
+
+                            <a href="exam-plan.html"
+
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">시험 계획</a>
+
+                            <a href="exam-reg.html"
+
+                                class="block px-5 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">응시 신청</a>
+
+                        </div>
+
+                    </div>
                     <a href="membership.html"
                         class="text-gray-700 hover:text-blue-600 py-6 font-semibold uppercase tracking-wider text-sm">Membership</a>
                     <a href="news.html"
@@ -246,8 +297,57 @@
 
                 <a href="education.html"
                     class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">EDUCATION</a>
-                <a href="certification.html"
-                    class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">CERTIFICATION</a>
+                <!-- CERTIFICATION 아코디언 -->
+
+                <div>
+
+                    <button type="button" onclick="toggleMobileSubmenu('mobile-submenu-cert', 'icon-cert')"
+
+                        class="w-full flex justify-between items-center px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">
+
+                        <span>CERTIFICATION</span>
+
+                        <svg id="icon-cert" class="w-5 h-5 transition-transform duration-200" fill="none"
+
+                            stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+
+                            </path>
+
+                        </svg>
+
+                    </button>
+
+                    <div id="mobile-submenu-cert" class="hidden pl-4 pr-2 py-1 space-y-1 bg-gray-50 rounded-lg mt-1">
+
+                        <a href="certification.html"
+
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· Certification 단계</a>
+
+                        <a href="fund-exam.html"
+
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· Fundamental Exam</a>
+
+                        <a href="appl-exam.html"
+
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· Application Exam</a>
+
+                        <a href="tocico.html"
+
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· TOCICO 소개</a>
+
+                        <a href="exam-plan.html"
+
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· 시험 계획</a>
+
+                        <a href="exam-reg.html"
+
+                            class="block px-3 py-2 text-sm text-gray-700 hover:text-blue-600 font-medium">· 응시 신청</a>
+
+                    </div>
+
+                </div>
                 <a href="membership.html"
                     class="block px-3 py-3 text-base font-bold text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-lg">MEMBERSHIP</a>
                 <a href="news.html"
