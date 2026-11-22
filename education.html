@@ -794,6 +794,58 @@
             document.body.classList.remove('overflow-hidden');
         }
 
+        // 동일 id(일차별 분할 행)를 하나의 과정 객체로 병합하고 커리큘럼 줄 수를 정렬
+        function normalizeCourseRows(rows) {
+            const ordered = [];
+            const byId = {};
+
+            rows.forEach(row => {
+                const id = String(row.id || '').trim();
+                if (!id) return;
+
+                const days = row.curriDay ? String(row.curriDay).split('\n') : [];
+                const topics = row.curriTopic ? String(row.curriTopic).split('\n') : [];
+                const details = row.curriDetail ? String(row.curriDetail).split('\n') : [];
+                const lineCount = Math.max(days.length, topics.length, details.length);
+
+                const paddedDays = [];
+                const paddedTopics = [];
+                const paddedDetails = [];
+                for (let i = 0; i < lineCount; i++) {
+                    paddedDays.push(days[i] || '');
+                    paddedTopics.push(topics[i] || '');
+                    paddedDetails.push(details[i] || '');
+                }
+
+                if (!byId[id]) {
+                    const entry = {
+                        ...row,
+                        id,
+                        _days: paddedDays,
+                        _topics: paddedTopics,
+                        _details: paddedDetails
+                    };
+                    byId[id] = entry;
+                    ordered.push(entry);
+                } else {
+                    const existing = byId[id];
+                    ['category', 'title', 'type', 'time', 'price', 'year', 'scheduleString', 'desc', 'applyUrl'].forEach(key => {
+                        if (!existing[key] && row[key]) existing[key] = row[key];
+                    });
+                    existing._days.push(...paddedDays);
+                    existing._topics.push(...paddedTopics);
+                    existing._details.push(...paddedDetails);
+                }
+            });
+
+            return ordered.map(({ _days, _topics, _details, ...course }) => ({
+                ...course,
+                curriDay: _days.join('\n'),
+                curriTopic: _topics.join('\n'),
+                curriDetail: _details.join('\n')
+            }));
+        }
+
         // Google Apps Script 실시간 데이터 동기화 (백그라운드 조용한 갱신)
         function syncWithGoogleSheet() {
             if (!GOOGLE_SHEET_API_URL) return;
@@ -805,7 +857,7 @@
                 })
                 .then(data => {
                     if (Array.isArray(data) && data.length > 0) {
-                        globalCourseData = data;
+                        globalCourseData = normalizeCourseRows(data);
                         renderCourseList(globalCourseData);
                     }
                 })
