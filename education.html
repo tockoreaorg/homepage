@@ -756,9 +756,10 @@
             document.getElementById('modal-desc').innerText = course.desc || '상세 과정 소개가 곧 업데이트될 예정입니다.';
 
             // 수강신청 버튼(구글 폼) 연결
+            const DEFAULT_APPLY_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScMPCA4DXs4c9fxBKJLcV1LUHkVlwqYQ1AiRA6Wu6TeWc4TlA/viewform?usp=header';
             const applyBtn = document.getElementById('modal-apply-btn');
             const modalToast = document.getElementById('modal-toast');
-            const applyUrl = String(course.applyUrl || '').trim();
+            const applyUrl = String(course.applyUrl || DEFAULT_APPLY_URL).trim();
 
             modalToast.classList.add('hidden');
             applyBtn.querySelector('span').innerText = '수강신청 하기';
